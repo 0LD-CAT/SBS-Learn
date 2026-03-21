@@ -1,3 +1,14 @@
 fastapi==0.135.1
 uvicorn==0.42.0
 pydantic==2.12.5
+pydantic[email]
+pydantic_settings==2.13.1
+sqlalchemy==2.0.48
+alembic==1.18.4
+python-jose==3.5.0
+bcrypt==4.0.1
+passlib[bcrypt]
+pyjwt==2.12.1
+asyncpg==0.31.0
+python-multipart==0.0.22
+python-dotenv==1.2.2
