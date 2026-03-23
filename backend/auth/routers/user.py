@@ -16,4 +16,4 @@ async def protected_route(token: str = Depends(oauth2_scheme)):
             status_code=401, detail="Неверный токен или срок действия истёк"
         )
 
-    return {"msg": f"Добро пожаловать, {payload['sub']}!"}
+    return {"user": {"id": int(payload['sub']), "username": payload['username'], "email": payload['email']}}

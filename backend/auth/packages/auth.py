@@ -57,7 +57,8 @@ class UserAuth:
 
         return True if new_user is not None else False
 
-    def is_email(self, value: str) -> bool:
+    @staticmethod
+    def is_email(value: str) -> bool:
         email_adapter = TypeAdapter(EmailStr)
 
         try:
@@ -86,6 +87,6 @@ class UserAuth:
         if not user or not await verify_password(attrs.password, user.hashed_password):
             raise HTTPException(status_code=401, detail="Неверный логин или пароль")
 
-        token_data = {"sub": user.username}
+        token_data = {"sub": str(user.id), "username": user.username, "email": user.email}
         access_token = await create_access_token(data=token_data)
-        return {"access_token": access_token, "token_type": "bearer"}
+        return {"access_token": access_token, "token_type": "Bearer"}
