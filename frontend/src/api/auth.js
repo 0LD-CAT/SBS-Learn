@@ -18,3 +18,15 @@ export const loginUser = async (data) => {
 
     return response.data;
 };
+
+export const logoutUser = async () => {
+  try {
+    await api.post("/auth/logout");
+  }
+  catch (error) {
+    console.warn("Ошибка logout:", error);
+  }
+  localStorage.removeItem("token");
+
+  window.location.href = "/login";
+};

@@ -10,6 +10,11 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
+    SESSION_SECRET: str
+    OAUTH_GOOGLE_CLIENT_ID: str
+    OAUTH_GOOGLE_CLIENT_SECRET: str
+    OAUTH_GITHUB_CLIENT_ID: str
+    OAUTH_GITHUB_CLIENT_SECRET: str
 
     @property
     def DATABASE_URL_asyncpg(self):

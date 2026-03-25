@@ -10,10 +10,17 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @router.get("/protected/")
 async def protected_route(token: str = Depends(oauth2_scheme)):
+    print("token", token)
     payload = await decode_token(token)
     if payload is None:
         raise HTTPException(
             status_code=401, detail="Неверный токен или срок действия истёк"
         )
 
-    return {"user": {"id": int(payload['sub']), "username": payload['username'], "email": payload['email']}}
+    return {
+        "user": {
+            "id": int(payload["sub"]),
+            "username": payload["username"],
+            "email": payload["email"],
+        }
+    }

@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/UserProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OAuthSuccess from "./pages/OAuthSuccess"
 
 export default function App() {
   return (
@@ -11,8 +12,8 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/profile"
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
+        <Route path="/profile"
           element={
             <ProtectedRoute>
               <Profile />

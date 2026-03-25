@@ -1,9 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 
-from backend.auth.routers import auth
-from backend.auth.routers import user
+from backend.auth.routers import auth, oauth, user
+from backend.settings import settings
 
 app = FastAPI(debug=True)
 
@@ -20,12 +21,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.SESSION_SECRET,
+)
+
 app.include_router(user.router)
 app.include_router(auth.router, prefix="/auth")
+app.include_router(oauth.router, prefix="/auth")
+
 
 @app.get("/")
 def home_page():
     return {"message": "Привет!"}
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

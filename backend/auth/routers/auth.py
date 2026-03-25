@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from pydantic import EmailStr
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...database import get_db
@@ -7,6 +7,7 @@ from ..packages.auth import UserAuth
 from ..schemas.user import LoginAttributes, RegisterAttributes
 
 router = APIRouter(tags=["authentication"])
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @router.post("/register")
@@ -27,9 +28,7 @@ async def register(
 
 
 @router.post("/login")
-async def login(
-    attrs: LoginAttributes, db_session: AsyncSession = Depends(get_db)
-):
+async def login(attrs: LoginAttributes, db_session: AsyncSession = Depends(get_db)):
     """
 
     :param attrs: логин/email и пароль пользователя
@@ -40,3 +39,20 @@ async def login(
     result = await UserAuth(db_session).login_user(attrs)
 
     return {"result": result}
+
+
+@router.post("/logout")
+async def logout(
+    token: str = Depends(oauth2_scheme),
+    db_session: AsyncSession = Depends(get_db),
+):
+    """Обработка запроса на завершение сессии пользователя web-приложения.
+
+    :param token: Идентификатор сессии.
+    :param db_session: Экземпляр сессии БД.
+    :return: Результат, словарь.
+    """
+
+    result = await UserAuth(db_session).logout_user(token)
+
+    return result

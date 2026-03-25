@@ -13,4 +13,9 @@ ___
 ## Запуск
 `uvicorn main:app --reload` - backend
 
-`npm run dev` - frontend
+`cd ./frontend && npm run dev` - frontend
+___
+## Миграции
+`alembic revision --autogenerate` - новая версия
+
+`alembic upgrade head` - обновление БД до последней версии

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+
 import { getUserProfile } from "../api/user";
+import { logoutUser } from "../api/auth";
+
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -43,6 +46,10 @@ export default function Profile() {
         <p>
           <strong>Email:</strong> {user.email}
         </p>
+
+        <button onClick={logoutUser} className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg transition">
+            Выйти
+        </button>
 
       </div>
     </div>

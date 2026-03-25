@@ -32,6 +32,14 @@ export default function Login() {
     }
   };
 
+  const googleLogin = () => {
+    window.location.href = "http://localhost:8000/auth/google/login"
+  }
+
+  const githubLogin = () => {
+    window.location.href = "http://localhost:8000/auth/github/login"
+  }
+
   return (
     <div className="min-h-screen bg-bgPage flex justify-center items-center px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm p-6 sm:p-8">
@@ -97,7 +105,7 @@ export default function Login() {
         {/* Social buttons */}
         <div className="space-y-3">
 
-          <button className="w-full border rounded-full py-3 flex items-center justify-center gap-3 hover:bg-gray-50">
+          <button className="w-full border rounded-full py-3 flex items-center justify-center gap-3 hover:shadow-xl">
 
             <img
               src={vkIcon}
@@ -109,7 +117,7 @@ export default function Login() {
           </button>
 
 
-          <button className="w-full border rounded-full py-3 flex items-center justify-center gap-3 hover:bg-gray-50">
+          <button onClick={googleLogin} className="w-full border rounded-full py-3 flex items-center justify-center gap-3 hover:shadow-xl">
 
             <img
               src={googleIcon}
@@ -121,7 +129,7 @@ export default function Login() {
           </button>
 
 
-          <button className="w-full border rounded-full py-3 flex items-center justify-center gap-3 hover:bg-gray-50">
+          <button onClick={githubLogin} className="w-full border rounded-full py-3 flex items-center justify-center gap-3 hover:shadow-xl">
 
             <img
               src={githubIcon}
