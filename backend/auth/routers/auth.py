@@ -6,7 +6,7 @@ from ...database import get_db
 from ..packages.auth import UserAuth
 from ..schemas.user import LoginAttributes, RegisterAttributes
 
-router = APIRouter(tags=["authentication"])
+router = APIRouter(tags=["Authentication"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
@@ -29,11 +29,12 @@ async def register(
 
 @router.post("/login")
 async def login(attrs: LoginAttributes, db_session: AsyncSession = Depends(get_db)):
-    """
+    """Авторизация пользователя
 
     :param attrs: логин/email и пароль пользователя
     :param db_session: Экземпляр сессии БД.
-    :return: {"access_token": access_token пользователя, "token_type": "bearer"}
+    :return: {"access_token": access_token пользователя,
+     "token_type": "bearer"}
     """
 
     result = await UserAuth(db_session).login_user(attrs)

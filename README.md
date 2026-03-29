@@ -19,3 +19,5 @@ ___
 `alembic revision --autogenerate` - новая версия
 
 `alembic upgrade head` - обновление БД до последней версии
+
+`alembic downgrade -1` - Понижение версии БД на 1

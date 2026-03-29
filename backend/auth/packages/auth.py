@@ -17,7 +17,7 @@ from ..schemas.user import LoginAttributes, RegisterAttributes
 
 
 class UserAuth:
-    """Интерфейс для работы с пользователем.
+    """Интерфейс для работы с авторизацией пользователя.
 
     Атрибуты:
         * db_session - экземпляр сессии БД
@@ -143,6 +143,14 @@ class UserAuth:
     async def get_or_create_oauth_user(
         self, provider: str, provider_id: str, email: str, username: str | None = None
     ):
+        """SSO авторизация.
+
+        :param provider: название провайдера (google/github).
+        :param provider_id: id провайдера.
+        :param email: email пользователя.
+        :param username: login пользователя | None.
+        :return: Результат, словарь с данными пользователя.
+        """
 
         provider_field = f"{provider}_id"
 

@@ -75,7 +75,7 @@ export default function Register() {
           />
 
           {/* Button */}
-          <button className="w-full bg-primary text-white rounded-xl py-3 font-medium">
+          <button className="w-full bg-primary text-white rounded-xl py-3 font-medium hover:opacity-90">
             Регистрация
           </button>
 

@@ -47,6 +47,11 @@ export default function Profile() {
           <strong>Email:</strong> {user.email}
         </p>
 
+        <p>
+          <strong>Пара ЯП для изучения:</strong>{" "}
+          {user.language_pair? `${user.language_pair.lang1.name} vs ${user.language_pair.lang2.name}` : "Не выбрана"}
+        </p>
+
         <button onClick={logoutUser} className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg transition">
             Выйти
         </button>
