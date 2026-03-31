@@ -28,7 +28,7 @@ export default function OAuthSuccess() {
       if (!profile.user.language_pair)
         navigate("/onboarding");
       else
-        navigate("/profile");
+        navigate("/lessons");
     };
     handleOAuth();
   }, []);

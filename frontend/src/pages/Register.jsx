@@ -70,7 +70,7 @@ export default function Register() {
           {/* Password */}
           <PasswordInput
               name="password"
-              placeholder="********"
+              placeholder="Введите свой пароль"
               onChange={handleChange}
           />
 

@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 
 from ..models import Language, LanguagePair, UserLanguagePair
+from ...auth.models import User
 
 
 class Languages:
@@ -82,7 +83,7 @@ class Languages:
         :param user_id: id пользователя
         :param lang1_id: id первого ЯП
         :param lang2_id: id второго ЯП
-        :return:
+        :return: pair
         """
 
         lang1_id, lang2_id = sorted([lang1_id, lang2_id])
@@ -96,7 +97,7 @@ class Languages:
         pair = result.scalar_one_or_none()
 
         if not pair:
-            raise HTTPException(404, "Language pair not found")
+            raise HTTPException(404, "Пара ЯП не найдена!")
         # сохранить пару пользователю
         stmt = select(UserLanguagePair).where(UserLanguagePair.user_id == user_id)
 
@@ -107,6 +108,14 @@ class Languages:
             existing.pair_id = pair.id
         else:
             self.db_session.add(UserLanguagePair(user_id=user_id, pair_id=pair.id))
-        await self.db_session.commit()
 
-        return pair.slug
+        # обновляем активную пару пользователя
+        user_stmt = select(User).where(User.id == user_id)
+        user_result = await self.db_session.execute(user_stmt)
+        user = user_result.scalar_one()
+        user.current_language_pair_id = pair.id
+
+        await self.db_session.commit()
+        await self.db_session.refresh(pair)
+
+        return pair

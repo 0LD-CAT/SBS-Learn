@@ -65,7 +65,7 @@ export default function Onboarding() {
         }
       );
 
-      navigate("/profile");
+      navigate("/lessons");
 
     }
 

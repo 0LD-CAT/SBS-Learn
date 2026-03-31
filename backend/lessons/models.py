@@ -7,7 +7,7 @@ from sqlalchemy import (
     String,
     Text,
     UniqueConstraint,
-    func,
+    func, DateTime,
 )
 from sqlalchemy.orm import relationship
 
@@ -113,4 +113,50 @@ class UserLanguagePair(Base):
     pair = relationship(
         "LanguagePair",
         back_populates="users",
+    )
+
+
+class Lesson(Base):
+    """Таблица языков программирования"""
+
+    __tablename__ = "lessons"
+    id = Column(Integer, primary_key=True)
+    title = Column(String(50), nullable=False, unique=True)
+    slug = Column(String(50), nullable=False, unique=True)
+    order_index = Column(Integer, nullable=False, unique=True)
+
+
+class UserLessonProgress(Base):
+
+    __tablename__ = "user_lessons_progress"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    lesson_id = Column(
+        Integer,
+        ForeignKey("lessons.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    language_pair_id = Column(
+        Integer,
+        ForeignKey("language_pairs.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    status = Column(
+        String(20),
+        default="locked",
+        nullable=False,
+    )
+    completed_at = Column(DateTime)
+
+    lesson = relationship("Lesson")
+    __table_args__ = (
+        UniqueConstraint(
+            "user_id",
+            "lesson_id",
+            "language_pair_id"
+        ),
     )

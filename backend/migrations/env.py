@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from backend.auth.models import User  # noqa
 from backend.database import Base
-from backend.lessons.models import Language, LanguagePair, UserLanguagePair  # noqa
+from backend.lessons.models import Language, LanguagePair, UserLanguagePair, Lesson, UserLessonProgress  # noqa
 from backend.settings import settings
 
 config = context.config

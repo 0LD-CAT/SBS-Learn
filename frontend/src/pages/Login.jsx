@@ -39,7 +39,7 @@ export default function Login() {
       if (!profile.user.language_pair)
         navigate("/onboarding");
       else
-        navigate("/profile");
+        navigate("/lessons");
     }
 
     catch {
