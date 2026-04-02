@@ -24,6 +24,7 @@ class Language(Base):
     extension = Column(String(10), nullable=False, unique=True)
     description = Column(Text)
     icon_url = Column(String(255))
+    demo_code = Column(Text, default='')
 
     pairs_as_lang1 = relationship(
         "LanguagePair",

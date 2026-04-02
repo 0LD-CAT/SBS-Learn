@@ -22,6 +22,8 @@ class Settings(BaseSettings):
     OAUTH_GITHUB_CLIENT_ID: str
     OAUTH_GITHUB_CLIENT_SECRET: str
 
+    PISTON_API_URI: str
+
     @property
     def DATABASE_URL_asyncpg(self):
         return (

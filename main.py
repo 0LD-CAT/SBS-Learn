@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from backend.auth.routers import auth, oauth, user
-from backend.lessons.routers import languages, lessons
+from backend.lessons.routers import languages, lessons, piston
 from backend.settings import settings
 
 app = FastAPI(debug=True)
@@ -32,6 +32,7 @@ app.include_router(auth.router, prefix="/auth")
 app.include_router(oauth.router, prefix="/auth")
 app.include_router(languages.router)
 app.include_router(lessons.router)
+app.include_router(piston.router)
 
 
 @app.get("/")
