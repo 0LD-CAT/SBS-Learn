@@ -1,5 +1,5 @@
 import httpx
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from backend.settings import settings
 
@@ -130,4 +130,3 @@ async def uninstall_language(request: dict):
         )
 
     return response.json()
-

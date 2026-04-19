@@ -1,11 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { HiUser } from "react-icons/hi";
 import { AiFillBook } from "react-icons/ai";
+import { AiFillCode } from "react-icons/ai";
 
 
 export default function PracticeHeader() {
-
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const isProfilePage = location.pathname === "/profile";
+
+  const buttonText = isProfilePage
+      ? "Практика"
+      : "Профиль";
+
+  const buttonIcon = isProfilePage
+      ? <AiFillCode className="text-3xl" />
+      : <HiUser className="text-3xl" />;
 
   return (
 
@@ -24,12 +35,12 @@ export default function PracticeHeader() {
 
       {/* LEFT SIDE */}
 
-      <h1 className="text-2xl font-bold text-center">
+      <h1 className="text-3xl font-extrabold tracking-tight">
           <span className="text-primary">Side</span>
           By
           <span className="text-red-500">Side</span>
           Learn
-        </h1>
+      </h1>
 
 
       {/* RIGHT SIDE BUTTONS */}
@@ -55,20 +66,23 @@ export default function PracticeHeader() {
 
 
         <button
-          onClick={() => navigate("/profile")}
-          className="flex items-center gap-2
-                border
-                px-3 sm:px-5
-                py-1.5 sm:py-2
-                rounded-xl
-                hover:bg-green-200
-                hover:shadow-lg
-                transition
-                text-sm sm:text-base
-              "
+          onClick={() =>
+            navigate(isProfilePage ? "/practice" : "/profile")
+          }
+          className="
+            flex items-center gap-2
+            border
+            px-3 sm:px-5
+            py-1.5 sm:py-2
+            rounded-xl
+            hover:bg-green-200
+            hover:shadow-lg
+            transition
+            text-sm sm:text-base
+          "
         >
-          <HiUser className="text-3xl" />
-          Профиль
+          {buttonIcon}
+          {buttonText}
         </button>
 
       </div>

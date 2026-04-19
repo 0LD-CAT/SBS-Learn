@@ -19,6 +19,7 @@ docker run `
   --name piston_api `
   ghcr.io/engineer-man/piston
 
+через endpoint `/piston/language/install` - установка языков для piston
 ___
 ## Запуск
 `uvicorn main:app --reload` - backend
@@ -27,7 +28,6 @@ ___
 
 `docker start piston_api` - piston api
 
-через endpoint `/piston/language/install` - установка языков для piston
 ___
 ## Миграции
 `alembic revision --autogenerate` - новая версия

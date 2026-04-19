@@ -37,7 +37,7 @@ app.include_router(piston.router)
 
 @app.get("/")
 def home_page():
-    return {"message": "Привет!"}
+    return {"message": "It's Backend"}
 
 
 if __name__ == "__main__":

@@ -7,7 +7,6 @@ import { getUserProfile } from "../api/user";
 import PasswordInput from "../components/PasswordInput";
 
 import githubIcon from "../assets/GitHub.png";
-import vkIcon from "../assets/VK.png";
 import googleIcon from "../assets/Google.png";
 
 
@@ -33,8 +32,12 @@ export default function Login() {
         res.result.access_token
       );
 
-      const profile =
-        await getUserProfile();
+      const profile = await getUserProfile();
+
+      localStorage.setItem(
+          "user_id",
+          profile.user.id
+      );
 
       if (!profile.user.language_pair)
         navigate("/onboarding");
@@ -103,11 +106,6 @@ export default function Login() {
         </div>
 
         <div className="space-y-3">
-
-          <button className="w-full border rounded-full py-3 flex items-center justify-center gap-3 hover:shadow-xl">
-            <img src={vkIcon} className="w-5 h-5" />
-            Продолжить с VK
-          </button>
 
           <button
             onClick={googleLogin}

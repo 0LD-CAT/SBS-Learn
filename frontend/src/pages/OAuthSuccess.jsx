@@ -22,8 +22,12 @@ export default function OAuthSuccess() {
         token
       );
 
-      const profile =
-        await getUserProfile();
+      const profile = await getUserProfile();
+
+      localStorage.setItem(
+          "user_id",
+          profile.user.id
+      );
 
       if (!profile.user.language_pair)
         navigate("/onboarding");

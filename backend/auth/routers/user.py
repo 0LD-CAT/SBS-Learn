@@ -59,11 +59,11 @@ async def select_languages_pair(
 
     if not payload:
         raise HTTPException(401, "Неверный токен!")
-    # Выбор языков
+
     pair = await Languages(db_session).select_languages_pair(
         user_id=int(payload["sub"]), lang1_id=attrs.lang1_id, lang2_id=attrs.lang2_id
     )
-    # Инициализация прогресса
+
     _ = await UserProgress(db_session).initialize_progress(int(payload["sub"]), pair.id)
 
     return {"msg": "Пара ЯП выбрана, прогресс инициализирован", "pair_slug": pair.slug}

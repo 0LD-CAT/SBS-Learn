@@ -27,6 +27,7 @@ export const logoutUser = async () => {
     console.warn("Ошибка logout:", error);
   }
   localStorage.removeItem("token");
+  localStorage.removeItem("user_id");
 
   window.location.href = "/login";
 };
