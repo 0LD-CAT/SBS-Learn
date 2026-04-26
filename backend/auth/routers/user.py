@@ -71,7 +71,7 @@ async def select_languages_pair(
 
 @router.get("/lessons/user", tags=["Lessons"])
 async def get_user_lessons(token: str = Depends(oauth2_scheme), db_session: AsyncSession = Depends(get_db)):
-    """Получение тем уроков из таблицы lessons из БД.
+    """Получение прогресса уроков для пользователя.
 
     :param token: jwt токен.
     :param db_session: Экземпляр сессии БД.

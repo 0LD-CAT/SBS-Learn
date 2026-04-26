@@ -68,11 +68,13 @@ class Languages:
             "lang1": {
                 "id": lang1_obj.id,
                 "name": lang1_obj.name,
+                "slug": lang1_obj.slug,
                 "icon_url": lang1_obj.icon_url,
             },
             "lang2": {
                 "id": lang2_obj.id,
                 "name": lang2_obj.name,
+                "slug": lang2_obj.slug,
                 "icon_url": lang2_obj.icon_url,
             },
         }

@@ -1,0 +1,323 @@
+{
+  "lessonSlug": "oop",
+  "title": "Основы объектно-ориентированного программирования (ООП)",
+  "description": "Классы, объекты, конструкторы, поля, методы, инкапсуляция и наследование.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python всё является объектом — даже функции и классы. Класс создаётся ключевым словом `class`, а конструктор — методом `__init__`."
+      },
+      "cpp": {
+        "content": "В C++ по умолчанию доступ к членам класса — приватный (private). Поля и методы могут быть `public`, `private` или `protected`."
+      },
+      "javascript": {
+        "content": "До ES6 в JavaScript не было классов; использовались функции-конструкторы и прототипы. Сейчас классы — удобный синтаксический сахар."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Первый параметр любого метода экземпляра в Python — `self` (ссылка на текущий объект). Его имя может быть любым, но `self` — стандарт."
+      },
+      "cpp": {
+        "content": "В C++ неявно передаётся указатель `this` — ссылка на текущий объект. Метод может обращаться к полям напрямую или через `this->field`."
+      },
+      "javascript": {
+        "content": "В классах JavaScript метод, объявленный с помощью `method() {}`, автоматически получает `this`, указывающее на экземпляр (если вызван как метод)."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Определение класса и создание объекта",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Синтаксис класса",
+          "values": {
+            "python": "class Cat:\n    def __init__(self, name):\n        self.name = name",
+            "cpp": "class Cat {\npublic:\n    Cat(std::string name);\nprivate:\n    std::string name;\n};",
+            "javascript": "class Cat {\n    constructor(name) {\n        this.name = name;\n    }\n}"
+          }
+        },
+        {
+          "attribute": "Создание объекта",
+          "values": {
+            "python": "cat = Cat(\"Murka\")",
+            "cpp": "Cat cat(\"Murka\");  (на стеке)\nCat* cat = new Cat(\"Murka\"); (в куче)",
+            "javascript": "let cat = new Cat(\"Murka\");"
+          }
+        },
+        {
+          "attribute": "Доступ к полю извне (public)",
+          "values": {
+            "python": "cat.name (если поле не приватное)",
+            "cpp": "cat.name (только если public)",
+            "javascript": "cat.name (если поле объявлено как свойство)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Конструктор",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Имя конструктора",
+          "values": {
+            "python": "def __init__(self, ...)",
+            "cpp": "то же имя, что и класс (Cat(...))",
+            "javascript": "constructor(...)"
+          }
+        },
+        {
+          "attribute": "Вызов из другого конструктора",
+          "values": {
+            "python": "через super() в дочернем",
+            "cpp": "список инициализации: Cat(...): field(...) {}",
+            "javascript": "super(...) в дочернем конструкторе"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Методы класса",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Объявление метода",
+          "values": {
+            "python": "def sound(self):\n    print(self.name)",
+            "cpp": "void sound();\nзатем определение: void Cat::sound() { ... }",
+            "javascript": "sound() { console.log(this.name); }"
+          }
+        },
+        {
+          "attribute": "Доступ к полям",
+          "values": {
+            "python": "self.name",
+            "cpp": "name (или this->name)",
+            "javascript": "this.name"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Инкапсуляция (видимость)",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Приватные поля",
+          "values": {
+            "python": "по соглашению _name (одно подчёркивание) или __name (name mangling)",
+            "cpp": "private: тип поле;",
+            "javascript": "#name (приватное поле класса, ES2022)"
+          }
+        },
+        {
+          "attribute": "Приватные методы",
+          "values": {
+            "python": "def __method(self):",
+            "cpp": "private: void method();",
+            "javascript": "#method() {}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Базовое наследование",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Синтаксис наследования",
+          "values": {
+            "python": "class Child(Parent):",
+            "cpp": "class Child : public Parent {",
+            "javascript": "class Child extends Parent {"
+          }
+        },
+        {
+          "attribute": "Вызов родительского конструктора",
+          "values": {
+            "python": "super().__init__(...)",
+            "cpp": "в списке инициализации: Child(...): Parent(...) {}",
+            "javascript": "super(...) в конструкторе дочернего класса"
+          }
+        },
+        {
+          "attribute": "Переопределение метода",
+          "values": {
+            "python": "def method(self): (просто переопределить)",
+            "cpp": "virtual void method() override;",
+            "javascript": "method() { ... } (автоматически переопределяет)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Класс Cat с полем и методом",
+      "description": "Простой класс, конструктор и метод, выводящий приветствие.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "class Cat:\n    def __init__(self, name):\n        self.name = name\n    \n    def say(self):\n        print(f\"{self.name} says Meow!\")\n\ncat = Cat(\"Барсик\")\ncat.say()"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <string>\n\nclass Cat {\npublic:\n    Cat(std::string name) : name(name) {}\n    void say() const {\n        std::cout << name << \" says Meow!\" << std::endl;\n    }\nprivate:\n    std::string name;\n};\n\nint main() {\n    Cat cat(\"Барсик\");\n    cat.say();\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "class Cat {\n    constructor(name) {\n        this.name = name;\n    }\n    say() {\n        console.log(`${this.name} says Meow!`);\n    }\n}\n\nconst cat = new Cat(\"Барсик\");\ncat.say();"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Наследование: класс Animal и Dog",
+      "description": "Базовый класс Animal с методом speak, дочерний Dog переопределяет метод.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "class Animal:\n    def __init__(self, name):\n        self.name = name\n    def speak(self):\n        print(f\"{self.name} speaks\")\n\nclass Dog(Animal):\n    def speak(self):\n        print(f\"{self.name} barks!\")\n\ndog = Dog(\"Шарик\")\ndog.speak()"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <string>\n\nclass Animal {\npublic:\n    Animal(std::string name) : name(name) {}\n    virtual void speak() const {\n        std::cout << name << \" speaks\" << std::endl;\n    }\nprotected:\n    std::string name;\n};\n\nclass Dog : public Animal {\npublic:\n    Dog(std::string name) : Animal(name) {}\n    void speak() const override {\n        std::cout << name << \" barks!\" << std::endl;\n    }\n};\n\nint main() {\n    Dog dog(\"Шарик\");\n    dog.speak();\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "class Animal {\n    constructor(name) {\n        this.name = name;\n    }\n    speak() {\n        console.log(`${this.name} speaks`);\n    }\n}\n\nclass Dog extends Animal {\n    speak() {\n        console.log(`${this.name} barks!`);\n    }\n}\n\nconst dog = new Dog(\"Шарик\");\ndog.speak();"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "Метод `__init__` — это не настоящий конструктор, а инициализатор. Настоящий конструктор — `__new__`, который создаёт объект, но его редко переопределяют."
+      },
+      "cpp": {
+        "content": "В C++ можно иметь несколько конструкторов (перегрузка) и конструкторы перемещения (move semantics), что повышает эффективность."
+      },
+      "javascript": {
+        "content": "В JavaScript классы — это синтаксический сахар над прототипами. Метод, определённый в классе, попадает в прототип, а не в каждый объект."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Как в Python обратиться к полю объекта внутри метода?",
+        "answers": [
+          { "text": "Само имя поля (name)", "correct": false },
+          { "text": "this.name", "correct": false },
+          { "text": "self.name", "correct": true }
+        ],
+        "explanation": "В Python первый параметр метода — `self`, через него доступны поля."
+      },
+      "cpp": {
+        "question": "Что нужно написать в C++, чтобы сделать метод виртуальным и переопределяемым?",
+        "answers": [
+          { "text": "virtual", "correct": true },
+          { "text": "override", "correct": false },
+          { "text": "abstract", "correct": false }
+        ],
+        "explanation": "Ключевое слово `virtual` в базовом классе позволяет переопределять метод в производных."
+      },
+      "javascript": {
+        "question": "Как вызвать конструктор родительского класса в дочернем классе JavaScript?",
+        "answers": [
+          { "text": "super()", "correct": true },
+          { "text": "this.parent()", "correct": false },
+          { "text": "super.constructor()", "correct": false }
+        ],
+        "explanation": "`super()` вызывает конструктор родителя и должна быть вызвана до использования `this`."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что означает `__` (двойное подчёркивание) в начале имени поля в Python?",
+        "answers": [
+          { "text": "Поле является публичным", "correct": false },
+          { "text": "Имя поля изменяется (name mangling) для приватности", "correct": true },
+          { "text": "Поле статическое", "correct": false }
+        ],
+        "explanation": "Двойное подчёркивание вызывает искажение имени, что помогает избежать случайного доступа извне."
+      },
+      "cpp": {
+        "question": "Какой модификатор доступа запрещает доступ к полю вне класса, но разрешает наследникам?",
+        "answers": [
+          { "text": "public", "correct": false },
+          { "text": "private", "correct": false },
+          { "text": "protected", "correct": true }
+        ],
+        "explanation": "`protected` — доступен внутри класса и в производных классах, но не снаружи."
+      },
+      "javascript": {
+        "question": "Как объявить приватное поле в современном JavaScript (ES2022+)?",
+        "answers": [
+          { "text": "_field", "correct": false },
+          { "text": "#field", "correct": true },
+          { "text": "private field", "correct": false }
+        ],
+        "explanation": "Символ `#` делает поле приватным (например, `#name`)."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какой специальный метод вызывается при создании объекта в Python?",
+        "answers": [
+          { "text": "__init__", "correct": true },
+          { "text": "__new__", "correct": false },
+          { "text": "__call__", "correct": false }
+        ],
+        "explanation": "`__init__` — инициализатор, вызывается после создания объекта."
+      },
+      "cpp": {
+        "question": "Что такое список инициализации конструктора в C++?",
+        "answers": [
+          { "text": "Вызов родительского конструктора и инициализация полей до тела конструктора", "correct": true },
+          { "text": "Список параметров конструктора", "correct": false },
+          { "text": "Массив значений", "correct": false }
+        ],
+        "explanation": "Список инициализации — двоеточие после параметров, где задаются начальные значения полей и вызываются конструкторы базовых классов."
+      },
+      "javascript": {
+        "question": "Что делает ключевое слово `extends` в JavaScript?",
+        "answers": [
+          { "text": "Расширяет массив", "correct": false },
+          { "text": "Создаёт наследование от другого класса", "correct": true },
+          { "text": "Импортирует модуль", "correct": false }
+        ],
+        "explanation": "`class Child extends Parent` задаёт наследование."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Класс Rectangle",
+      "description": "Создайте класс Rectangle с полями `width` и `height`, конструктором и методом `area()`, возвращающим площадь. Создайте объект со сторонами 5 и 3 и выведите площадь.",
+      "expected_output": "15",
+      "hint": "В Python: `def area(self): return self.width * self.height`; в C++: метод должен быть публичным; в JavaScript: аналогично."
+    },
+    {
+      "type": "task",
+      "title": "Наследование: класс Person и Student",
+      "description": "Создайте базовый класс Person с полем `name` и методом `introduce()`, выводящим 'Меня зовут [name]'. Создайте дочерний класс Student, добавляющий поле `studentId` и переопределяющий `introduce()`, чтобы выводить 'Меня зовут [name], мой номер студента [id]'. Продемонстрируйте работу.",
+      "expected_output": "Меня зовут Анна, мой номер студента 12345",
+      "hint": "В C++ используйте `virtual` и `override`; в JS `super()`; в Python `super().__init__(name)`."
+    },
+    {
+      "type": "task",
+      "title": "Инкапсуляция: приватное поле",
+      "description": "Создайте класс BankAccount с приватным полем `_balance` (Python) / `balance` с соответствующим модификатором (C++, JS) и публичными методами `deposit(amount)` и `getBalance()`. Начальный баланс 0. Пополните на 100 и выведите баланс.",
+      "expected_output": "100",
+      "hint": "В C++ поле сделать private, в JavaScript — используйте `#balance` или соглашение `_balance` (но # — настоящая приватность)."
+    }
+  ]
+}

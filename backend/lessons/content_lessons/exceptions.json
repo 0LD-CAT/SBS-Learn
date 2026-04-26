@@ -1,0 +1,282 @@
+{
+  "lessonSlug": "exceptions",
+  "title": "Обработка ошибок (исключения)",
+  "description": "Как перехватывать и обрабатывать ошибки во время выполнения программы.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python используется конструкция `try-except-else-finally`. Блок `else` выполняется, если исключение не возникло."
+      },
+      "cpp": {
+        "content": "C++ поддерживает `try-catch`, но нет обязательного блока `finally`. Для освобождения ресурсов применяют RAII (идиома «захват ресурса при инициализации»)."
+      },
+      "javascript": {
+        "content": "В JavaScript есть `try-catch-finally`. Можно генерировать любые значения, но принято использовать объекты `Error`."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Можно перехватывать несколько типов исключений: `except (ValueError, TypeError)`. А также получать объект исключения: `except ZeroDivisionError as e`."
+      },
+      "cpp": {
+        "content": "В C++ можно ловить исключения по типу, а также использовать `catch(...)` для перехвата любого исключения."
+      },
+      "javascript": {
+        "content": "В JavaScript можно выбрасывать (`throw`) любые значения, но рекомендуется `throw new Error('сообщение')`."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Синтаксис обработки исключений",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Базовый синтаксис перехвата",
+          "values": {
+            "python": "try:\n    # код\nexcept ExceptionType:\n    # обработка",
+            "cpp": "try {\n    // код\n} catch (exceptionType& e) {\n    // обработка\n}",
+            "javascript": "try {\n    // код\n} catch (error) {\n    // обработка\n}"
+          }
+        },
+        {
+          "attribute": "Блок finally (выполняется всегда)",
+          "values": {
+            "python": "есть (`try-finally` или `try-except-finally`)",
+            "cpp": "нет (используются деструкторы/RAII)",
+            "javascript": "есть (`try-catch-finally`)"
+          }
+        },
+        {
+          "attribute": "Блок else (при отсутствии исключения)",
+          "values": {
+            "python": "есть (`try-except-else`)",
+            "cpp": "нет",
+            "javascript": "нет"
+          }
+        },
+        {
+          "attribute": "Генерация исключения",
+          "values": {
+            "python": "raise ValueError('текст')",
+            "cpp": "throw std::runtime_error(\"текст\")",
+            "javascript": "throw new Error('текст')"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Типы исключений (встроенные)",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Ошибка деления на ноль",
+          "values": {
+            "python": "ZeroDivisionError",
+            "cpp": "std::overflow_error? (обычно не генерируется, зависит от реализации) или своё",
+            "javascript": "Infinity (не исключение), но можно генерировать самостоятельно"
+          }
+        },
+        {
+          "attribute": "Неверный тип/приведение",
+          "values": {
+            "python": "TypeError, ValueError",
+            "cpp": "std::bad_cast, std::invalid_argument",
+            "javascript": "TypeError"
+          }
+        },
+        {
+          "attribute": "Ошибка доступа по индексу",
+          "values": {
+            "python": "IndexError",
+            "cpp": "std::out_of_range (для vector::at())",
+            "javascript": "RangeError (не для массивов, просто undefined)"
+          }
+        },
+        {
+          "attribute": "Любое исключение",
+          "values": {
+            "python": "except Exception: (базовый класс) или except: (все)",
+            "cpp": "catch(...)",
+            "javascript": "catch (error) — любой тип"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Базовый перехват исключения",
+      "description": "Перехват деления на ноль и ошибки преобразования строки в число.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "try:\n    x = int(input('Введите число: '))\n    y = 10 / x\n    print(f'Результат: {y}')\nexcept ValueError:\n    print('Ошибка: введено не число')\nexcept ZeroDivisionError:\n    print('Ошибка: деление на ноль')\nexcept Exception as e:\n    print(f'Другая ошибка: {e}')"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <stdexcept>\n#include <string>\n\nint main() {\n    std::string input;\n    std::cout << \"Введите число: \";\n    std::cin >> input;\n    try {\n        int x = std::stoi(input);\n        if (x == 0) throw std::runtime_error(\"деление на ноль\");\n        double y = 10.0 / x;\n        std::cout << \"Результат: \" << y << std::endl;\n    } catch (const std::invalid_argument& e) {\n        std::cout << \"Ошибка: введено не число\" << std::endl;\n    } catch (const std::runtime_error& e) {\n        std::cout << \"Ошибка: \" << e.what() << std::endl;\n    } catch (...) {\n        std::cout << \"Неизвестная ошибка\" << std::endl;\n    }\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "const input = prompt('Введите число:');\ntry {\n    const x = Number(input);\n    if (isNaN(x)) throw new Error('введено не число');\n    if (x === 0) throw new Error('деление на ноль');\n    const y = 10 / x;\n    console.log(`Результат: ${y}`);\n} catch (error) {\n    console.log(`Ошибка: ${error.message}`);\n} finally {\n    console.log('Блок finally выполнен');\n}"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Finally / RAII",
+      "description": "Демонстрация освобождения ресурсов: в Python и JS блок finally, в C++ — деструктор (RAII).",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "try:\n    f = open('file.txt', 'r')\n    data = f.read()\nexcept FileNotFoundError:\n    print('Файл не найден')\nfinally:\n    try:\n        f.close()\n    except NameError:\n        pass  # файл не был открыт\n    print('Ресурс закрыт')"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <fstream>\n\nint main() {\n    std::ifstream file(\"file.txt\");\n    try {\n        if (!file.is_open()) throw std::runtime_error(\"Файл не найден\");\n        std::string data;\n        std::getline(file, data);\n    } catch (const std::exception& e) {\n        std::cout << e.what() << std::endl;\n    }\n    // file автоматически закроется в деструкторе (RAII)\n    std::cout << \"Ресурс закрыт автоматически\" << std::endl;\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let file = null;\ntry {\n    // имитация работы с файлом\n    file = { close: () => console.log('Файл закрыт') };\n    // допустим, произошла ошибка\n    throw new Error('Ошибка чтения');\n} catch (error) {\n    console.log(error.message);\n} finally {\n    if (file) file.close();\n    console.log('Блок finally выполнен');\n}"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "В Python можно создать пользовательское исключение, унаследовав класс от `Exception`. Часто добавляют только `pass` в тело класса."
+      },
+      "cpp": {
+        "content": "Стандартная библиотека C++ предоставляет иерархию исключений, начинающуюся с `std::exception`. Метод `what()` возвращает строку-описание ошибки."
+      },
+      "javascript": {
+        "content": "В JavaScript можно выбрасывать не только объекты Error, но и примитивы: `throw 42;` или `throw 'Error!';`, но это считается плохой практикой."
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "Конструкция `try-except` может быть использована для реализации 'EAFP' (Easier to Ask for Forgiveness than Permission) — стиля, когда сначала делают, а потом обрабатывают ошибку."
+      },
+      "cpp": {
+        "content": "В C++ исключения не должны использоваться для обычного контроля потока — это замедляет программу. Лучше применять коды ошибок."
+      },
+      "javascript": {
+        "content": "Асинхронные ошибки в JavaScript (в промисах) обрабатываются через `.catch()`, а в `async/await` — через `try-catch`."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какой блок выполняется в Python ВСЕГДА, независимо от того, было исключение или нет?",
+        "answers": [
+          { "text": "except", "correct": false },
+          { "text": "else", "correct": false },
+          { "text": "finally", "correct": true }
+        ],
+        "explanation": "Блок `finally` выполняется всегда, даже если в `try` был `return` или `break`."
+      },
+      "cpp": {
+        "question": "Как перехватить исключение любого типа в C++?",
+        "answers": [
+          { "text": "catch(...)", "correct": true },
+          { "text": "catch(all)", "correct": false },
+          { "text": "catch(std::exception)", "correct": false }
+        ],
+        "explanation": "Синтаксис `catch(...)` ловит любое исключение, но не даёт доступа к объекту исключения."
+      },
+      "javascript": {
+        "question": "Что произойдёт, если в `try` нет `catch`, но есть `finally`?",
+        "answers": [
+          { "text": "Ошибка синтаксиса", "correct": false },
+          { "text": "Код в finally выполнится, потом исключение пойдёт дальше", "correct": true },
+          { "text": "finally не выполнится", "correct": false }
+        ],
+        "explanation": "Блок `finally` выполнится, даже если исключение не перехвачено, после чего исключение будет проброшено наружу."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какое исключение возникнет при попытке преобразовать `int('abc')`?",
+        "answers": [
+          { "text": "TypeError", "correct": false },
+          { "text": "ValueError", "correct": true },
+          { "text": "SyntaxError", "correct": false }
+        ],
+        "explanation": "`ValueError` — когда функция получает аргумент правильного типа, но некорректного значения."
+      },
+      "cpp": {
+        "question": "Какой заголовочный файл нужно подключить для использования `std::runtime_error`?",
+        "answers": [
+          { "text": "<exception>", "correct": false },
+          { "text": "<stdexcept>", "correct": true },
+          { "text": "<system_error>", "correct": false }
+        ],
+        "explanation": "`std::runtime_error` определён в `<stdexcept>`."
+      },
+      "javascript": {
+        "question": "Как правильно создать и выбросить объект ошибки с сообщением?",
+        "answers": [
+          { "text": "throw 'Error'", "correct": false },
+          { "text": "throw new Error('message')", "correct": true },
+          { "text": "throw Error('message')", "correct": false }
+        ],
+        "explanation": "Рекомендуемый способ — `throw new Error('message')`, чтобы иметь стек вызовов."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что произойдёт, если в `try` нет `except`, но есть `finally`, и в `try` возникло исключение?",
+        "answers": [
+          { "text": "Исключение игнорируется", "correct": false },
+          { "text": "finally выполнится, потом исключение будет поднято выше", "correct": true },
+          { "text": "finally не выполнится, исключение уходит сразу", "correct": false }
+        ],
+        "explanation": "Python сначала выполняет finally, затем пробрасывает исключение дальше."
+      },
+      "cpp": {
+        "question": "Что означает RAII в контексте обработки ошибок C++?",
+        "answers": [
+          { "text": "Автоматическое освобождение ресурсов через деструкторы", "correct": true },
+          { "text": "Блок finally", "correct": false },
+          { "text": "Глобальный перехват исключений", "correct": false }
+        ],
+        "explanation": "RAII (Resource Acquisition Is Initialization) гарантирует освобождение ресурсов при выходе из области видимости, даже через исключение."
+      },
+      "javascript": {
+        "question": "Как перехватить ошибку в асинхронной функции, использующей `async/await`?",
+        "answers": [
+          { "text": "Через .catch() у промиса", "correct": false },
+          { "text": "Через try-catch внутри async функции", "correct": true },
+          { "text": "Через window.onerror", "correct": false }
+        ],
+        "explanation": "В `async` функциях можно использовать `try-catch` для перехвата ошибок из `await`."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Безопасное деление",
+      "description": "Напишите программу, которая запрашивает у пользователя два числа (делимое и делитель) и выводит результат деления. Если введено не число или делитель равен нулю — программа не должна падать, а выводить понятное сообщение об ошибке. Используйте обработку исключений.",
+      "expected_output": "Пример: при вводе '10' и '0' → 'Ошибка: деление на ноль'",
+      "hint": "Перехватывайте исключения преобразования типов (ValueError, invalid_argument, NaN) и арифметические (ZeroDivisionError)."
+    },
+    {
+      "type": "task",
+      "title": "Обработка ошибок при работе с файлом",
+      "description": "Откройте файл с именем 'data.txt' для чтения. Если файл не существует — выведите сообщение 'Файл не найден' и создайте его с текстом 'Новый файл'. Если файл существует — прочитайте и выведите его содержимое. В любом случае закройте файл (или используйте менеджер контекста/RAII).",
+      "expected_output": "При отсутствии файла: 'Файл не найден' (и файл создаётся). При наличии: содержимое файла.",
+      "hint": "В Python используйте `try-except FileNotFoundError`, в C++ — проверку `is_open()` или перехват `std::ios_base::failure`, в JS — имитируйте через `catch`."
+    },
+    {
+      "type": "task",
+      "title": "Пользовательское исключение",
+      "description": "Создайте функцию `validate_age(age)`, которая выбрасывает исключение, если возраст меньше 0 или больше 150. Напишите код, который вызывает эту функцию и обрабатывает исключение, выводя сообщение 'Недопустимый возраст'.",
+      "expected_output": "Если age = -5 → 'Недопустимый возраст'",
+      "hint": "В Python определите класс `InvalidAgeError(Exception)`, в C++ — `class InvalidAgeError : public std::exception`, в JavaScript — `throw new Error('Недопустимый возраст')`."
+    }
+  ]
+}

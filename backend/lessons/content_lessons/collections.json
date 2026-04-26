@@ -1,0 +1,371 @@
+{
+  "lessonSlug": "collections",
+  "title": "Массивы и коллекции",
+  "description": "Работа со списками, массивами, словарями и объектами.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python список (list) — динамический массив, который может хранить элементы любых типов. Размер меняется автоматически."
+      },
+      "cpp": {
+        "content": "В C++ статические массивы имеют фиксированный размер, известный на этапе компиляции. Для динамических массивов используется std::vector."
+      },
+      "javascript": {
+        "content": "Массивы в JavaScript — это специальные объекты с числовыми индексами и автоматическим изменением длины."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Словари (dict) в Python хранят пары ключ-значение, ключи могут быть любого неизменяемого типа (строки, числа, кортежи)."
+      },
+      "cpp": {
+        "content": "Ассоциативные контейнеры std::map и std::unordered_map хранят отсортированные или хешированные пары ключ-значение."
+      },
+      "javascript": {
+        "content": "Объекты (Object) и Map в JavaScript позволяют ассоциировать ключи (строки или символы) со значениями. Map сохраняет порядок вставки и принимает любые типы ключей."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Списки / массивы",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Тип / название",
+          "values": {
+            "python": "list",
+            "cpp": "std::vector<T> (динамический массив)",
+            "javascript": "Array"
+          }
+        },
+        {
+          "attribute": "Создание",
+          "values": {
+            "python": "nums = [1, 2, 3]",
+            "cpp": "std::vector<int> nums = {1, 2, 3};",
+            "javascript": "let nums = [1, 2, 3];"
+          }
+        },
+        {
+          "attribute": "Доступ по индексу",
+          "values": {
+            "python": "value = nums[0]",
+            "cpp": "int value = nums[0];",
+            "javascript": "let value = nums[0];"
+          }
+        },
+        {
+          "attribute": "Изменение элемента",
+          "values": {
+            "python": "nums[0] = 10",
+            "cpp": "nums[0] = 10;",
+            "javascript": "nums[0] = 10;"
+          }
+        },
+        {
+          "attribute": "Добавление в конец",
+          "values": {
+            "python": "nums.append(4)",
+            "cpp": "nums.push_back(4);",
+            "javascript": "nums.push(4);"
+          }
+        },
+        {
+          "attribute": "Удаление последнего элемента",
+          "values": {
+            "python": "nums.pop()",
+            "cpp": "nums.pop_back();",
+            "javascript": "nums.pop();"
+          }
+        },
+        {
+          "attribute": "Длина",
+          "values": {
+            "python": "len(nums)",
+            "cpp": "nums.size()",
+            "javascript": "nums.length"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Словари / ассоциативные массивы",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Тип / название",
+          "values": {
+            "python": "dict",
+            "cpp": "std::map<K, V> или std::unordered_map<K,V>",
+            "javascript": "Object или Map"
+          }
+        },
+        {
+          "attribute": "Создание",
+          "values": {
+            "python": "person = {'name': 'Alice', 'age': 25}",
+            "cpp": "std::map<std::string,int> m = {{\"age\",25}};",
+            "javascript": "let person = { name: 'Alice', age: 25 };"
+          }
+        },
+        {
+          "attribute": "Доступ по ключу",
+          "values": {
+            "python": "value = person['name']",
+            "cpp": "int age = m[\"age\"];",
+            "javascript": "let name = person.name; или person['name'];"
+          }
+        },
+        {
+          "attribute": "Добавление / изменение",
+          "values": {
+            "python": "person['city'] = 'Moscow'",
+            "cpp": "m[\"city\"] = \"Moscow\";",
+            "javascript": "person.city = 'Moscow';"
+          }
+        },
+        {
+          "attribute": "Удаление по ключу",
+          "values": {
+            "python": "del person['age']",
+            "cpp": "m.erase(\"age\");",
+            "javascript": "delete person.age;"
+          }
+        },
+        {
+          "attribute": "Проверка наличия ключа",
+          "values": {
+            "python": "'name' in person",
+            "cpp": "m.find(\"name\") != m.end()",
+            "javascript": "'name' in person"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Дополнительные типы коллекций",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Множество",
+          "values": {
+            "python": "set (неупорядоченное, уникальные элементы)",
+            "cpp": "std::set<T> (отсортированное), std::unordered_set<T>",
+            "javascript": "Set (ES6, уникальные значения)"
+          }
+        },
+        {
+          "attribute": "Кортеж",
+          "values": {
+            "python": "tuple (неизменяемый)",
+            "cpp": "std::tuple (C++11)",
+            "javascript": "нет встроенного, используют массивы или объекты"
+          }
+        },
+        {
+          "attribute": "Очередь / стек",
+          "values": {
+            "python": "collections.deque (двусторонняя очередь)",
+            "cpp": "std::queue, std::stack",
+            "javascript": "массивы через push/pop, shift/unshift"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Работа со списком (массивом)",
+      "description": "Создание списка, доступ по индексу, добавление и удаление элементов.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "fruits = ['apple', 'banana', 'cherry']\nprint(fruits[0])          # apple\nfruits.append('orange')\nprint(fruits)            # ['apple', 'banana', 'cherry', 'orange']\nfruits.pop()\nprint(fruits)            # ['apple', 'banana', 'cherry']\nprint(len(fruits))       # 3"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::vector<std::string> fruits = {\"apple\", \"banana\", \"cherry\"};\n    std::cout << fruits[0] << std::endl;   // apple\n    fruits.push_back(\"orange\");\n    for (const auto& f : fruits) std::cout << f << \" \"; // apple banana cherry orange\n    std::cout << std::endl;\n    fruits.pop_back();\n    std::cout << fruits.size() << std::endl; // 3\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let fruits = ['apple', 'banana', 'cherry'];\nconsole.log(fruits[0]);      // apple\nfruits.push('orange');\nconsole.log(fruits);          // ['apple', 'banana', 'cherry', 'orange']\nfruits.pop();\nconsole.log(fruits.length);   // 3"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Работа со словарём (объектом)",
+      "description": "Создание, доступ, добавление и удаление пар ключ-значение.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "person = {'name': 'Alice', 'age': 25}\nprint(person['name'])      # Alice\nperson['city'] = 'Moscow'\nprint(person)              # {'name': 'Alice', 'age': 25, 'city': 'Moscow'}\ndel person['age']\nprint('age' in person)     # False"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <map>\n#include <string>\n\nint main() {\n    std::map<std::string, std::string> person;\n    person[\"name\"] = \"Alice\";\n    person[\"age\"] = \"25\";\n    std::cout << person[\"name\"] << std::endl;  // Alice\n    person[\"city\"] = \"Moscow\";\n    person.erase(\"age\");\n    if (person.find(\"age\") == person.end())\n        std::cout << \"age not found\" << std::endl;\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let person = { name: 'Alice', age: 25 };\nconsole.log(person.name);      // Alice\nperson.city = 'Moscow';\nconsole.log(person);            // { name: 'Alice', age: 25, city: 'Moscow' }\ndelete person.age;\nconsole.log('age' in person);   // false"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "Списки в Python могут содержать элементы разных типов: `[1, 'hello', 3.14, True]`. Это возможно потому, что список хранит ссылки на объекты."
+      },
+      "cpp": {
+        "content": "В C++ контейнеры стандартной библиотеки (std::vector, std::map) используют итераторы, которые позволяют проходить по элементам и модифицировать их. Итераторы похожи на указатели."
+      },
+      "javascript": {
+        "content": "Метод `forEach` массива выполняет функцию для каждого элемента, но его нельзя прервать (в отличие от обычного цикла). Для прерывания используют `some` или `for...of`."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Как добавить элемент в конец списка в Python?",
+        "answers": [
+          { "text": "list.add(5)", "correct": false },
+          { "text": "list.append(5)", "correct": true },
+          { "text": "list.insert(5)", "correct": false }
+        ],
+        "explanation": "Метод append добавляет элемент в конец списка."
+      },
+      "cpp": {
+        "question": "Какой метод std::vector добавляет элемент в конец?",
+        "answers": [
+          { "text": "push_front", "correct": false },
+          { "text": "add", "correct": false },
+          { "text": "push_back", "correct": true }
+        ],
+        "explanation": "push_back добавляет элемент в конец вектора."
+      },
+      "javascript": {
+        "question": "Как добавить элемент в конец массива в JavaScript?",
+        "answers": [
+          { "text": "array.add(5)", "correct": false },
+          { "text": "array.push(5)", "correct": true },
+          { "text": "array.append(5)", "correct": false }
+        ],
+        "explanation": "Метод push добавляет один или несколько элементов в конец массива."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что выведет: `d = {'a':1, 'b':2}; print(d.get('c', 0))`?",
+        "answers": [
+          { "text": "0", "correct": true },
+          { "text": "None", "correct": false },
+          { "text": "KeyError", "correct": false }
+        ],
+        "explanation": "Метод get возвращает значение по ключу, а если ключа нет — возвращает второй аргумент (по умолчанию None)."
+      },
+      "cpp": {
+        "question": "Что происходит при обращении к несуществующему ключу в std::map через оператор `[]`?",
+        "answers": [
+          { "text": "Выбрасывается исключение", "correct": false },
+          { "text": "Ключ создаётся со значением по умолчанию", "correct": true },
+          { "text": "Программа падает", "correct": false }
+        ],
+        "explanation": "operator[] в std::map вставляет элемент со значением по умолчанию, если ключ отсутствует."
+      },
+      "javascript": {
+        "question": "Как проверить, содержит ли объект ключ 'name'?",
+        "answers": [
+          { "text": "obj.hasKey('name')", "correct": false },
+          { "text": "obj.contains('name')", "correct": false },
+          { "text": "'name' in obj", "correct": true }
+        ],
+        "explanation": "Оператор `in` проверяет наличие свойства в объекте или его прототипе."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какая структура данных в Python является неизменяемой после создания?",
+        "answers": [
+          { "text": "list", "correct": false },
+          { "text": "dict", "correct": false },
+          { "text": "tuple", "correct": true }
+        ],
+        "explanation": "Кортеж (tuple) — неизменяемая коллекция."
+      },
+      "cpp": {
+        "question": "Какой контейнер C++ хранит элементы в отсортированном порядке по ключу?",
+        "answers": [
+          { "text": "std::unordered_map", "correct": false },
+          { "text": "std::vector", "correct": false },
+          { "text": "std::map", "correct": true }
+        ],
+        "explanation": "std::map — упорядоченный ассоциативный контейнер (обычно на красно-чёрном дереве)."
+      },
+      "javascript": {
+        "question": "Какой метод массивов JavaScript удаляет последний элемент и возвращает его?",
+        "answers": [
+          { "text": "pop()", "correct": true },
+          { "text": "shift()", "correct": false },
+          { "text": "splice(-1,1)", "correct": false }
+        ],
+        "explanation": "pop удаляет последний элемент и возвращает его; shift удаляет первый."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Как преобразовать список в множество?",
+        "answers": [
+          { "text": "list.to_set()", "correct": false },
+          { "text": "set(list)", "correct": true },
+          { "text": "list.set()", "correct": false }
+        ],
+        "explanation": "set(list) создаёт множество, удаляя дубликаты."
+      },
+      "cpp": {
+        "question": "Какой заголовочный файл нужен для std::vector?",
+        "answers": [
+          { "text": "<vector>", "correct": true },
+          { "text": "<list>", "correct": false },
+          { "text": "<array>", "correct": false }
+        ],
+        "explanation": "std::vector определён в заголовке <vector>."
+      },
+      "javascript": {
+        "question": "Что делает метод `map` у массива?",
+        "answers": [
+          { "text": "Создаёт новый массив, применяя функцию к каждому элементу", "correct": true },
+          { "text": "Изменяет исходный массив", "correct": false },
+          { "text": "Возвращает первый элемент, удовлетворяющий условию", "correct": false }
+        ],
+        "explanation": "map возвращает новый массив с результатами вызова функции на каждом элементе."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Фильтрация списка",
+      "description": "Дан список чисел: [10, 25, 7, 42, 15, 30]. Создайте новый список, содержащий только числа больше 20. Выведите результат.",
+      "expected_output": "[25, 42, 30]",
+      "hint": "Можно использовать фильтрацию или создать новый список."
+    },
+    {
+      "type": "task",
+      "title": "Подсчёт частоты символов",
+      "description": "Дана строка 'hello world'. Подсчитайте, сколько раз встречается каждый символ, и выведите результат в виде словаря/объекта. Игнорируйте пробел (не включайте его).",
+      "expected_output": "{ 'h': 1, 'e': 1, 'l': 3, 'o': 2, 'w': 1, 'r': 1, 'd': 1 } (порядок может различаться)",
+      "hint": "Используйте цикл по символам строки и увеличивайте счётчик в словаре."
+    },
+    {
+      "type": "task",
+      "title": "Сумма всех элементов массива",
+      "description": "Создайте массив чисел [1, 2, 3, 4, 5] и вычислите сумму всех его элементов. Выведите результат.",
+      "expected_output": "15",
+      "hint": "Используйте цикл или встроенные методы (accumulate, reduce, sum)."
+    }
+  ]
+}

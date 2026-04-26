@@ -1,0 +1,306 @@
+{
+  "lessonSlug": "file_io",
+  "title": "Файловый ввод/вывод",
+  "description": "Чтение и запись файлов: открытие, режимы, обработка ошибок, практические примеры.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python для работы с файлами используется встроенная функция `open()`. Блок `with` автоматически закрывает файл даже при ошибке."
+      },
+      "cpp": {
+        "content": "В C++ файловые потоки: `ifstream` для чтения, `ofstream` для записи, `fstream` для чтения и записи. Файл нужно закрывать явно методом `close()`."
+      },
+      "javascript": {
+        "content": "В Node.js работа с файлами осуществляется через модуль `fs`. Доступны синхронные (`readFileSync`, `writeFileSync`) и асинхронные методы (`readFile`, `writeFile`)."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Режимы открытия файла: 'r' (чтение), 'w' (запись, перезапись), 'a' (добавление), 'x' (создание, ошибка если существует). Можно добавить 'b' для бинарного режима."
+      },
+      "cpp": {
+        "content": "Режимы: `ios::in` (чтение), `ios::out` (запись, перезапись), `ios::app` (добавление), `ios::binary` (бинарный). Комбинируются через битовый оператор `|`."
+      },
+      "javascript": {
+        "content": "В `fs` режимы задаются строкой: `'r'` (чтение), `'w'` (запись, перезапись), `'a'` (добавление), `'wx'` (создание с исключением). Для бинарных файлов добавляют `'b'` (не всегда требуется)."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Основные операции с файлами",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Открытие файла для чтения",
+          "values": {
+            "python": "`file = open('data.txt', 'r')`",
+            "cpp": "`std::ifstream file(\"data.txt\");`",
+            "javascript": "`fs.readFileSync('data.txt', 'utf8')`"
+          }
+        },
+        {
+          "attribute": "Открытие для записи (перезапись)",
+          "values": {
+            "python": "`file = open('out.txt', 'w')`",
+            "cpp": "`std::ofstream file(\"out.txt\");`",
+            "javascript": "`fs.writeFileSync('out.txt', data)`"
+          }
+        },
+        {
+          "attribute": "Открытие для добавления",
+          "values": {
+            "python": "`open('log.txt', 'a')`",
+            "cpp": "`std::ofstream file(\"log.txt\", std::ios::app);`",
+            "javascript": "`fs.appendFileSync('log.txt', data)`"
+          }
+        },
+        {
+          "attribute": "Чтение всего файла",
+          "values": {
+            "python": "`content = file.read()`",
+            "cpp": "`std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());`",
+            "javascript": "`const content = fs.readFileSync('file.txt', 'utf8');`"
+          }
+        },
+        {
+          "attribute": "Чтение построчно",
+          "values": {
+            "python": "`for line in file:`",
+            "cpp": "`while (std::getline(file, line))`",
+            "javascript": "`const lines = content.split('\\n');`"
+          }
+        },
+        {
+          "attribute": "Запись строки",
+          "values": {
+            "python": "`file.write('текст\\n')`",
+            "cpp": "`file << \"текст\" << std::endl;`",
+            "javascript": "`fs.writeFileSync('file.txt', 'текст\\n')`"
+          }
+        },
+        {
+          "attribute": "Закрытие файла",
+          "values": {
+            "python": "автоматически при выходе из `with`, или `file.close()`",
+            "cpp": "`file.close()` (или при разрушении объекта)",
+            "javascript": "не требуется (синхронные методы закрывают автоматически)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Проверка ошибок при работе с файлами",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Проверка существования файла перед чтением",
+          "values": {
+            "python": "`import os; os.path.exists('file.txt')`",
+            "cpp": "`file.is_open()` или `if (file)`",
+            "javascript": "`fs.existsSync('file.txt')` или `try { fs.accessSync(...) } catch`"
+          }
+        },
+        {
+          "attribute": "Обработка ошибок",
+          "values": {
+            "python": "`try...except IOError, FileNotFoundError`",
+            "cpp": "проверка `file.fail()`, `file.bad()`, исключения (если включены)",
+            "javascript": "`try...catch` (для синхронных методов) или колбэк с ошибкой (асинхронные)"
+          }
+        },
+        {
+          "attribute": "Исключение при открытии несуществующего файла",
+          "values": {
+            "python": "`FileNotFoundError`",
+            "cpp": "нет исключения (нужно проверять `is_open()`)",
+            "javascript": "ошибка в синхронных методах, ловится через `try...catch`"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Запись в файл (перезапись)",
+      "description": "Пример записи строки в файл. Если файл существует, он будет перезаписан.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "with open('output.txt', 'w', encoding='utf-8') as f:\n    f.write(\"Hello, file!\\n\")\n    f.write(\"Second line\")\nprint(\"Запись выполнена\")"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <fstream>\n\nint main() {\n    std::ofstream file(\"output.txt\");\n    if (file.is_open()) {\n        file << \"Hello, file!\" << std::endl;\n        file << \"Second line\" << std::endl;\n        file.close();\n        std::cout << \"Запись выполнена\" << std::endl;\n    } else {\n        std::cout << \"Не удалось открыть файл\" << std::endl;\n    }\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript (Node.js)",
+          "code": "const fs = require('fs');\n\ntry {\n    fs.writeFileSync('output.txt', 'Hello, file!\\nSecond line\\n', 'utf8');\n    console.log('Запись выполнена');\n} catch (err) {\n    console.error('Ошибка:', err);\n}"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Чтение файла построчно",
+      "description": "Чтение и вывод каждой строки текстового файла.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "try:\n    with open('example.txt', 'r', encoding='utf-8') as f:\n        for line in f:\n            print(line.strip())\nexcept FileNotFoundError:\n    print(\"Файл не найден\")"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <fstream>\n#include <string>\n\nint main() {\n    std::ifstream file(\"example.txt\");\n    if (file.is_open()) {\n        std::string line;\n        while (std::getline(file, line)) {\n            std::cout << line << std::endl;\n        }\n        file.close();\n    } else {\n        std::cout << \"Файл не найден\" << std::endl;\n    }\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript (Node.js)",
+          "code": "const fs = require('fs');\n\ntry {\n    const content = fs.readFileSync('example.txt', 'utf8');\n    const lines = content.split('\\n');\n    lines.forEach(line => console.log(line));\n} catch (err) {\n    console.log('Файл не найден');\n}"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Добавление в конец файла",
+      "description": "Открытие в режиме добавления, чтобы не стирать существующее содержимое.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "with open('log.txt', 'a', encoding='utf-8') as f:\n    f.write(\"Новая строка лога\\n\")\nprint(\"Добавлено\")"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <fstream>\n\nint main() {\n    std::ofstream file(\"log.txt\", std::ios::app);\n    if (file.is_open()) {\n        file << \"Новая строка лога\" << std::endl;\n        file.close();\n    }\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript (Node.js)",
+          "code": "const fs = require('fs');\n\ntry {\n    fs.appendFileSync('log.txt', 'Новая строка лога\\n', 'utf8');\n    console.log('Добавлено');\n} catch (err) {\n    console.error(err);\n}"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "Функция `open()` в Python умеет работать с разными кодировками через параметр `encoding`. По умолчанию используется кодировка платформы (обычно UTF-8 в современных системах)."
+      },
+      "cpp": {
+        "content": "В C++ можно открыть файл в бинарном режиме, добавив флаг `std::ios::binary`. Это важно для работы с изображениями и другими нетекстовыми данными, чтобы избежать преобразования символов конца строки."
+      },
+      "javascript": {
+        "content": "Асинхронные методы модуля `fs` (например, `fs.readFile`) используют колбэки или промисы (с `fs.promises` API), что позволяет не блокировать выполнение программы при работе с большими файлами."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какой режим открытия файла в Python добавляет данные в конец, не удаляя существующие?",
+        "answers": [
+          { "text": "`'r'`", "correct": false },
+          { "text": "`'w'`", "correct": false },
+          { "text": "`'a'`", "correct": true },
+          { "text": "`'x'`", "correct": false }
+        ],
+        "explanation": "Режим `'a'` (append) открывает файл для добавления в конец."
+      },
+      "cpp": {
+        "question": "Какой флаг нужно добавить в `std::ofstream` для открытия файла в режиме добавления?",
+        "answers": [
+          { "text": "`std::ios::out`", "correct": false },
+          { "text": "`std::ios::app`", "correct": true },
+          { "text": "`std::ios::trunc`", "correct": false }
+        ],
+        "explanation": "Флаг `app` (append) обеспечивает добавление в конец файла."
+      },
+      "javascript": {
+        "question": "Какой метод модуля `fs` в Node.js используется для синхронной записи файла с перезаписью?",
+        "answers": [
+          { "text": "`fs.writeFileSync()`", "correct": true },
+          { "text": "`fs.appendFileSync()`", "correct": false },
+          { "text": "`fs.openSync()`", "correct": false }
+        ],
+        "explanation": "`fs.writeFileSync` перезаписывает файл, если он существует, или создаёт новый."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что произойдёт при попытке прочитать несуществующий файл с помощью `open('missing.txt', 'r')`?",
+        "answers": [
+          { "text": "Вернётся пустая строка", "correct": false },
+          { "text": "Будет вызвано исключение `FileNotFoundError`", "correct": true },
+          { "text": "Файл создастся автоматически", "correct": false }
+        ],
+        "explanation": "Python выбрасывает исключение `FileNotFoundError` при открытии несуществующего файла в режиме чтения."
+      },
+      "cpp": {
+        "question": "Как проверить, успешно ли открылся файл в C++ с помощью `ifstream`?",
+        "answers": [
+          { "text": "`file.good()`", "correct": false },
+          { "text": "`file.is_open()`", "correct": true },
+          { "text": "`file.ready()`", "correct": false }
+        ],
+        "explanation": "Метод `is_open()` возвращает `true`, если файл открыт."
+      },
+      "javascript": {
+        "question": "Какой метод рекомендуется использовать для проверки существования файла в современном Node.js (без устаревшего `exists`)?",
+        "answers": [
+          { "text": "`fs.existsSync()`", "correct": true },
+          { "text": "`fs.checkFileSync()`", "correct": false },
+          { "text": "`fs.accessSync()`", "correct": true }
+        ],
+        "explanation": "Оба варианта допустимы: `fs.existsSync()` проще, `fs.accessSync()` более гибкий, но выбрасывает исключение."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что делает конструкция `with open(...) as f:`?",
+        "answers": [
+          { "text": "Открывает файл и автоматически закрывает его при выходе из блока", "correct": true },
+          { "text": "Создаёт резервную копию файла", "correct": false },
+          { "text": "Открывает файл только для чтения", "correct": false }
+        ],
+        "explanation": "`with` — контекстный менеджер, гарантирующий закрытие файла."
+      },
+      "cpp": {
+        "question": "Какой заголовочный файл нужен для работы с файловыми потоками в C++?",
+        "answers": [
+          { "text": "<iostream>", "correct": false },
+          { "text": "<fstream>", "correct": true },
+          { "text": "<cstdio>", "correct": false }
+        ],
+        "explanation": "Для `ifstream`, `ofstream`, `fstream` требуется `<fstream>`."
+      },
+      "javascript": {
+        "question": "Какой режим открытия файла в `fs.writeFileSync` используется по умолчанию?",
+        "answers": [
+          { "text": "чтение", "correct": false },
+          { "text": "добавление", "correct": false },
+          { "text": "запись с перезаписью", "correct": true }
+        ],
+        "explanation": "`writeFileSync` по умолчанию перезаписывает файл (режим 'w')."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Копирование файла",
+      "description": "Создайте программу, которая копирует содержимое файла 'source.txt' в 'destination.txt'. Если файл 'destination.txt' существует, он должен быть перезаписан. Содержимое 'source.txt' любое (можно создать вручную).",
+      "expected_output": "После выполнения 'destination.txt' должен содержать то же, что и 'source.txt'.",
+      "hint": "В Python: прочитать содержимое source, записать в destination. В C++: читать построчно или блоками. В JS: использовать `readFileSync` и `writeFileSync`."
+    },
+    {
+      "type": "task",
+      "title": "Подсчёт строк в файле",
+      "description": "Напишите программу, которая читает файл 'data.txt' и выводит количество строк в нём. Если файл не существует, вывести сообщение об ошибке.",
+      "expected_output": "Количество строк: X",
+      "hint": "Читайте файл построчно и увеличивайте счётчик. В Python проще через `len(f.readlines())`."
+    },
+    {
+      "type": "task",
+      "title": "Логгер с датой",
+      "description": "Реализуйте функцию (или просто код), которая добавляет в файл 'log.txt' строку с текущей датой и временем и переданным сообщением. Формат: '[2025-03-07 14:30:00] Ошибка соединения'. Добавьте два-три сообщения и убедитесь, что они появляются в файле.",
+      "expected_output": "В файле 'log.txt' должно быть несколько строк с разными метками времени.",
+      "hint": "Используйте модуль работы со временем: `datetime.now()` в Python, `<chrono>` в C++ (сложнее, можно использовать `time(0)`), в JS — `new Date()`."
+    }
+  ]
+}

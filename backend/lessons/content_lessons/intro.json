@@ -1,0 +1,282 @@
+{
+  "lessonSlug": "intro",
+  "title": "Введение в языки: синтаксис, компиляция и интерпретация",
+  "description": "Первое знакомство с языками: различия синтаксиса, типизации и процесса выполнения программ.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "Python сначала компилируется в байткод, который затем выполняется интерпретатором CPython."
+      },
+      "cpp": {
+        "content": "C++ компилируется в машинный код заранее, перед запуском программы."
+      },
+      "javascript": {
+        "content": "JavaScript выполняется движком (например V8) с использованием интерпретации и JIT‑компиляции."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Hello World в Python можно написать одной строкой без объявления функции main()."
+      },
+      "cpp": {
+        "content": "В C++ программа начинается с функции main(), которая является точкой входа."
+      },
+      "javascript": {
+        "content": "JavaScript можно выполнить прямо в консоли браузера без отдельного файла."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Основные характеристики языков",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Тип языка",
+          "values": {
+            "python": "интерпретируемый (байткод)",
+            "cpp": "компилируемый",
+            "javascript": "интерпретируемый + JIT"
+          }
+        },
+        {
+          "attribute": "Типизация",
+          "values": {
+            "python": "динамическая, строгая",
+            "cpp": "статическая, строгая",
+            "javascript": "динамическая, слабая"
+          }
+        },
+        {
+          "attribute": "Управление памятью",
+          "values": {
+            "python": "сборщик мусора",
+            "cpp": "ручное + RAII",
+            "javascript": "сборщик мусора"
+          }
+        },
+        {
+          "attribute": "Парадигма",
+          "values": {
+            "python": "мультипарадигмальный (ООП, процедурный, функциональный)",
+            "cpp": "мультипарадигмальный (ООП, процедурный, обобщённый)",
+            "javascript": "мультипарадигмальный (прототипное ООП, функциональный)"
+          }
+        },
+        {
+          "attribute": "Основное применение",
+          "values": {
+            "python": "AI, Data Science, веб-бэкенд, автоматизация",
+            "cpp": "системное программирование, игры, high-performance",
+            "javascript": "веб-фронтенд, бэкенд (Node.js), мобильные приложения"
+          }
+        },
+        {
+          "attribute": "Сложность обучения для новичка",
+          "values": {
+            "python": "низкая",
+            "cpp": "высокая",
+            "javascript": "средняя"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Процесс выполнения программы",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Этапы выполнения",
+          "values": {
+            "python": "код → байткод → интерпретация",
+            "cpp": "код → компиляция → линковка → запуск",
+            "javascript": "код → парсинг → JIT → выполнение"
+          }
+        },
+        {
+          "attribute": "Когда обнаруживаются ошибки типов",
+          "values": {
+            "python": "во время выполнения",
+            "cpp": "во время компиляции",
+            "javascript": "во время выполнения"
+          }
+        },
+        {
+          "attribute": "Скорость выполнения (относительная)",
+          "values": {
+            "python": "низкая",
+            "cpp": "очень высокая",
+            "javascript": "средняя (благодаря JIT)"
+          }
+        },
+        {
+          "attribute": "Необходимость компиляции перед запуском",
+          "values": {
+            "python": "нет (интерпретация на лету)",
+            "cpp": "да",
+            "javascript": "нет (интерпретация / JIT)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Hello World",
+      "description": "Первая программа для сравнения синтаксиса трёх языков.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "print(\"Hello, World!\")"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n\nint main(){\n    std::cout << \"Hello, World!\" << std::endl;\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "console.log(\"Hello, World!\");"
+        }
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Базовый синтаксис",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Однострочный комментарий",
+          "values": {
+            "python": "# комментарий",
+            "cpp": "// комментарий",
+            "javascript": "// комментарий"
+          }
+        },
+        {
+          "attribute": "Многострочный комментарий",
+          "values": {
+            "python": "\"\"\" ... \"\"\" или ''' ... '''",
+            "cpp": "/* ... */",
+            "javascript": "/* ... */"
+          }
+        },
+        {
+          "attribute": "Конец инструкции",
+          "values": {
+            "python": "перевод строки",
+            "cpp": ";",
+            "javascript": "; (обычно используется)"
+          }
+        },
+        {
+          "attribute": "Строки",
+          "values": {
+            "python": "'...' или \"...\"",
+            "cpp": "\"...\"",
+            "javascript": "'...' \"...\" `...`"
+          }
+        },
+        {
+          "attribute": "Объявление переменной",
+          "values": {
+            "python": "x = 5 (тип выводится)",
+            "cpp": "int x = 5; (тип обязательно)",
+            "javascript": "let x = 5; или const x = 5;"
+          }
+        },
+        {
+          "attribute": "Точка входа",
+          "values": {
+            "python": "нет, выполнение сверху вниз",
+            "cpp": "int main() { ... }",
+            "javascript": "в браузере – событие, в Node.js – module.exports"
+          }
+        }
+      ]
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "Python назван в честь комик‑группы Monty Python, а не змеи."
+      },
+      "cpp": {
+        "content": "Название C++ происходит от оператора ++, означающего улучшенную версию языка C."
+      },
+      "javascript": {
+        "content": "JavaScript изначально назывался Mocha, затем LiveScript."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Во что компилируется Python перед выполнением?",
+        "answers": [
+          { "text": "В машинный код", "correct": false },
+          { "text": "В байткод", "correct": true },
+          { "text": "В exe‑файл", "correct": false }
+        ],
+        "explanation": "Python сначала преобразуется в байткод."
+      },
+      "cpp": {
+        "question": "Что выполняется перед запуском программы C++?",
+        "answers": [
+          { "text": "Компиляция и линковка", "correct": true },
+          { "text": "Интерпретация", "correct": false },
+          { "text": "JIT", "correct": false }
+        ],
+        "explanation": "Перед запуском создаётся исполняемый файл."
+      },
+      "javascript": {
+        "question": "Что ускоряет выполнение JavaScript?",
+        "answers": [
+          { "text": "JIT‑компиляция", "correct": true },
+          { "text": "Линковщик", "correct": false },
+          { "text": "Ассемблер", "correct": false }
+        ],
+        "explanation": "Современные движки используют JIT."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Нужна ли функция main() в Python?",
+        "answers": [
+          { "text": "Да", "correct": false },
+          { "text": "Нет", "correct": true }
+        ],
+        "explanation": "Python выполняется сверху вниз."
+      },
+      "cpp": {
+        "question": "Какая функция является точкой входа?",
+        "answers": [
+          { "text": "main()", "correct": true },
+          { "text": "start()", "correct": false }
+        ],
+        "explanation": "Программа начинается с main()."
+      },
+      "javascript": {
+        "question": "Можно ли выполнить JavaScript без компиляции вручную?",
+        "answers": [
+          { "text": "Да", "correct": true },
+          { "text": "Нет", "correct": false }
+        ],
+        "explanation": "Код выполняется движком автоматически."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Простой калькулятор",
+      "description": "Выведите результат выражения 15 + 27 в формате: 15 + 27 = 42",
+      "expected_output": "15 + 27 = 42",
+      "hint": "Используйте оператор сложения и вывод строки."
+    },
+    {
+      "type": "task",
+      "title": "Приветствие",
+      "description": "Выведите строку вида: Привет, Анна! Имя можно задать прямо в коде.",
+      "expected_output": "Привет, Анна!",
+      "hint": "Используйте строку и вывод."
+    }
+  ]
+}

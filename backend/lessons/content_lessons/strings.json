@@ -1,0 +1,305 @@
+{
+  "lessonSlug": "strings",
+  "title": "Работа со строками",
+  "description": "Строковые типы, основные операции: конкатенация, длина, доступ к символам, поиск, замена, форматирование.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "Строки в Python неизменяемы (immutable). Любая операция, изменяющая строку, создаёт новый объект."
+      },
+      "cpp": {
+        "content": "В C++ строки `std::string` изменяемы (mutable) — можно менять отдельные символы по индексу."
+      },
+      "javascript": {
+        "content": "Строки в JavaScript неизменяемы, как и в Python. Методы возвращают новую строку."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Строки в Python поддерживают 'срезы' (slicing) — получение подстроки через `s[start:end:step]`."
+      },
+      "cpp": {
+        "content": "В C++ для получения подстроки используется метод `substr(pos, count)`."
+      },
+      "javascript": {
+        "content": "В JavaScript для среза строки используется метод `slice(start, end)` или `substring(start, end)`."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Базовые операции со строками",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Конкатенация (объединение)",
+          "values": {
+            "python": "`'Hello ' + 'world'` → `'Hello world'`",
+            "cpp": "`std::string s = \"Hello \" + \"world\";` или `s1 + s2`",
+            "javascript": "`'Hello ' + 'world'` → `'Hello world'`"
+          }
+        },
+        {
+          "attribute": "Длина строки",
+          "values": {
+            "python": "`len(s)`",
+            "cpp": "`s.length()` или `s.size()`",
+            "javascript": "`s.length`"
+          }
+        },
+        {
+          "attribute": "Доступ к символу по индексу",
+          "values": {
+            "python": "`s[0]` (первые символ), `s[-1]` (последний)",
+            "cpp": "`s[0]` (только чтение/запись, без проверки границ), `s.at(0)` (с проверкой)",
+            "javascript": "`s[0]` или `s.charAt(0)`"
+          }
+        },
+        {
+          "attribute": "Получение подстроки",
+          "values": {
+            "python": "`s[start:end]` (срез)",
+            "cpp": "`s.substr(start, count)`",
+            "javascript": "`s.slice(start, end)` или `s.substring(start, end)`"
+          }
+        },
+        {
+          "attribute": "Поиск подстроки",
+          "values": {
+            "python": "`s.find(sub)` (возвращает индекс или -1)",
+            "cpp": "`s.find(sub)` (возвращает `std::string::npos` если не найдено)",
+            "javascript": "`s.indexOf(sub)` (возвращает -1) или `s.includes(sub)` (true/false)"
+          }
+        },
+        {
+          "attribute": "Замена подстроки",
+          "values": {
+            "python": "`s.replace(old, new)` (создаёт новую строку)",
+            "cpp": "`s.replace(pos, count, new_str)` (изменяет исходную)",
+            "javascript": "`s.replace(old, new)` (только первое вхождение) или `replaceAll` (все)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Форматирование строк",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Вставка переменных",
+          "values": {
+            "python": "f-строки: `f\"Привет, {name}!\"`",
+            "cpp": "`std::cout << \"Привет, \" << name << \"!\";` или `std::format` (C++20)",
+            "javascript": "шаблонные литералы: ``Привет, ${name}!` `"
+          }
+        },
+        {
+          "attribute": "Преобразование регистра (верхний/нижний)",
+          "values": {
+            "python": "`s.upper()`, `s.lower()`",
+            "cpp": "требует цикла или алгоритмов (нет встроенного метода)",
+            "javascript": "`s.toUpperCase()`, `s.toLowerCase()`"
+          }
+        },
+        {
+          "attribute": "Удаление пробелов по краям",
+          "values": {
+            "python": "`s.strip()` (оба края), `lstrip()`, `rstrip()`",
+            "cpp": "нет встроенного, пишется вручную",
+            "javascript": "`s.trim()` (оба края), `trimStart()`, `trimEnd()`"
+          }
+        },
+        {
+          "attribute": "Разделение строки на части",
+          "values": {
+            "python": "`s.split(separator)` → список строк",
+            "cpp": "нет встроенного (используют строковые потоки или циклы)",
+            "javascript": "`s.split(separator)` → массив строк"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Конкатенация и длина строки",
+      "description": "Объединение строк и вывод длины.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "s1 = \"Hello\"\ns2 = \"World\"\nresult = s1 + \" \" + s2\nprint(result)        # Hello World\nprint(len(result))   # 11"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string s1 = \"Hello\";\n    std::string s2 = \"World\";\n    std::string result = s1 + \" \" + s2;\n    std::cout << result << std::endl;        // Hello World\n    std::cout << result.length() << std::endl; // 11\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let s1 = \"Hello\";\nlet s2 = \"World\";\nlet result = s1 + \" \" + s2;\nconsole.log(result);        // Hello World\nconsole.log(result.length); // 11"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Доступ к символам и подстроки",
+      "description": "Извлечение символов и срезов.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "s = \"Programming\"\nprint(s[0])          # P\nprint(s[-1])         # g\nprint(s[0:4])        # Prog (символы с 0 по 3)\nprint(s[4:])         # ramming"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string s = \"Programming\";\n    std::cout << s[0] << std::endl;          // P\n    std::cout << s.back() << std::endl;      // g (C++11)\n    std::cout << s.substr(0, 4) << std::endl; // Prog\n    std::cout << s.substr(4) << std::endl;    // ramming\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let s = \"Programming\";\nconsole.log(s[0]);          // P\nconsole.log(s[s.length-1]); // g\nconsole.log(s.slice(0, 4)); // Prog\nconsole.log(s.slice(4));    // ramming"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Форматирование (вставка переменных)",
+      "description": "Современные способы вставки значений в строку.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "name = \"Alice\"\nage = 25\nprint(f\"My name is {name} and I am {age} years old.\")"
+        },
+        "cpp": {
+          "label": "C++ (C++20 format)",
+          "code": "#include <iostream>\n#include <format>\n\nint main() {\n    std::string name = \"Alice\";\n    int age = 25;\n    std::cout << std::format(\"My name is {} and I am {} years old.\", name, age) << std::endl;\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let name = \"Alice\";\nlet age = 25;\nconsole.log(`My name is ${name} and I am ${age} years old.`);"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "В Python можно умножать строки на число: `'Ha' * 3` даст `'HaHaHa'`."
+      },
+      "cpp": {
+        "content": "В C++ строки можно сравнивать лексикографически операторами `==`, `!=`, `<`, `>` — как числа."
+      },
+      "javascript": {
+        "content": "Строки в JavaScript хранятся в кодировке UTF-16, поэтому некоторые символы (например, эмодзи) занимают две позиции (`length` может быть больше, чем количество символов)."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что выведет код? `s = 'abc'; print(s[1:])`",
+        "answers": [
+          { "text": "a", "correct": false },
+          { "text": "bc", "correct": true },
+          { "text": "abc", "correct": false }
+        ],
+        "explanation": "Срез `[1:]` возвращает символы с индекса 1 до конца."
+      },
+      "cpp": {
+        "question": "Какой метод C++ возвращает длину строки `std::string s`?",
+        "answers": [
+          { "text": "s.length()", "correct": true },
+          { "text": "len(s)", "correct": false },
+          { "text": "s.sizeof()", "correct": false }
+        ],
+        "explanation": "`length()` и `size()` — синонимы, оба возвращают количество символов."
+      },
+      "javascript": {
+        "question": "Какой результат у `'hello'.toUpperCase()`?",
+        "answers": [
+          { "text": "'HELLO'", "correct": true },
+          { "text": "'Hello'", "correct": false },
+          { "text": "ошибка", "correct": false }
+        ],
+        "explanation": "`toUpperCase()` преобразует все буквы в верхний регистр."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Как получить последний символ строки `s`?",
+        "answers": [
+          { "text": "s[0]", "correct": false },
+          { "text": "s[-1]", "correct": true },
+          { "text": "s.end()", "correct": false }
+        ],
+        "explanation": "В Python отрицательные индексы отсчитываются с конца."
+      },
+      "cpp": {
+        "question": "Что вернёт `s.find(\"abc\")` если подстрока не найдена?",
+        "answers": [
+          { "text": "-1", "correct": false },
+          { "text": "std::string::npos", "correct": true },
+          { "text": "0", "correct": false }
+        ],
+        "explanation": "`find` возвращает специальную константу `npos` (обычно -1, но сравнивать надо именно с `npos`)."
+      },
+      "javascript": {
+        "question": "Какой результат у `'JavaScript'.slice(4, 8)`?",
+        "answers": [
+          { "text": "'Script'", "correct": false },
+          { "text": "Scri", "correct": true },
+          { "text": "'Java'", "correct": false }
+        ],
+        "explanation": "`slice(4,8)` берёт символы с индекса 4 (включительно) по 8 (не включая). Индексы: 0-J,1-a,2-v,3-a,4-S,5-c,6-r,7-i,8-p,9-t."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какая операция используется для форматирования f-строк?",
+        "answers": [
+          { "text": "%", "correct": false },
+          { "text": ".format()", "correct": false },
+          { "text": "f\"...{var}...\"", "correct": true }
+        ],
+        "explanation": "f-строки — самый современный и удобный способ форматирования в Python."
+      },
+      "cpp": {
+        "question": "Как объединить строки `a = \"Hello\"` и `b = \"World\"` с пробелом в C++?",
+        "answers": [
+          { "text": "a + \" \" + b", "correct": true },
+          { "text": "a.concat(b)", "correct": false },
+          { "text": "strcat(a, b)", "correct": false }
+        ],
+        "explanation": "Оператор `+` перегружен для `std::string` и выполняет конкатенацию."
+      },
+      "javascript": {
+        "question": "Как удалить пробелы с обоих концов строки?",
+        "answers": [
+          { "text": "s.trim()", "correct": true },
+          { "text": "s.strip()", "correct": false },
+          { "text": "s.replace()", "correct": false }
+        ],
+        "explanation": "`trim()` удаляет пробельные символы в начале и конце строки."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Форматированное приветствие",
+      "description": "Создайте переменные `name = \"Елена\"`, `city = \"Москва\"`. Выведите строку: 'Елена живёт в Москве.' Используйте подстановку переменных (f-строки, шаблонные литералы или std::format).",
+      "expected_output": "Елена живёт в Москве.",
+      "hint": "В C++ можно использовать `std::cout << name << \" живёт в \" << city << \".\";`"
+    },
+    {
+      "type": "task",
+      "title": "Первая и последняя буква",
+      "description": "Запросите (или задайте в коде) строку. Выведите её первый и последний символы, а также длину. Например, для строки 'Python' вывод: 'P n 6'.",
+      "expected_output": "P n 6",
+      "hint": "Используйте доступ по индексу и свойство длины."
+    },
+    {
+      "type": "task",
+      "title": "Замена подстроки",
+      "description": "Дана строка: 'Я люблю JavaScript'. Замените 'JavaScript' на 'C++' и выведите результат. В Python — `replace()`, в C++ — `replace()` или цикл, в JS — `replaceAll()`.",
+      "expected_output": "Я люблю C++",
+      "hint": "Обратите внимание, что в JS метод `replace` заменяет только первое вхождение по умолчанию, используйте `replaceAll`."
+    }
+  ]
+}

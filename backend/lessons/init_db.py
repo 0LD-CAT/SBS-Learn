@@ -1,14 +1,21 @@
 import asyncio
 from itertools import combinations
+from logging import exception
+from pathlib import Path
 
 from sqlalchemy import select
 
 from backend.database import AsyncSessionLocal
-from backend.lessons.models import Language, LanguagePair
+from backend.lessons.models import (
+    Language,
+    LanguagePair,
+)
+from backend.lessons.packages.helpers import LessonContentSeeder
 
 
 async def seed_languages(db_session):
     """Добавление ЯП в таблицу languages"""
+
     languages = [
         Language(
             name="Python",
@@ -42,6 +49,7 @@ async def seed_languages(db_session):
 
 async def seed_language_pairs(db_session):
     """Добавление пар ЯП в таблицу language_pairs"""
+
     existing_pairs = await db_session.execute(select(LanguagePair))
 
     if existing_pairs.scalars().first():
@@ -65,11 +73,24 @@ async def seed_language_pairs(db_session):
         await db_session.commit()
 
 
+async def seed_lessons_content(db_session):
+    """Добавление наполнения уроков для каждой темы"""
+    try:
+        seeder = LessonContentSeeder(db_session)
+        _ = await seeder.seed()
+    except Exception as e:
+        print(e)
+
+    print("✅ Наполнение уроков контентом завершено!")
+
+
 async def init_db():
-    """Инициалтзация БД"""
+    """Инициализация БД"""
+
     async with AsyncSessionLocal() as db_session:
-        # await seed_languages(session)
-        await seed_language_pairs(db_session)
+        # await seed_languages(db_session)
+        # await seed_language_pairs(db_session)
+        await seed_lessons_content(db_session)
 
 
 if __name__ == "__main__":

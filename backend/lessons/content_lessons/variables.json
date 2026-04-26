@@ -1,0 +1,316 @@
+{
+  "lessonSlug": "variables_and_types",
+  "title": "Переменные и типы данных",
+  "description": "Как объявлять переменные, какие бывают типы данных и как они работают.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python переменная — это всего лишь ссылка на объект. При присваивании `a = 5` создаётся объект `5`, а `a` начинает на него ссылаться."
+      },
+      "cpp": {
+        "content": "В C++ переменная — это именованная область памяти, имеющая фиксированный тип. Размер переменной известен на этапе компиляции."
+      },
+      "javascript": {
+        "content": "В JavaScript переменные не привязаны к типу: одна переменная может сначала хранить число, а потом строку."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Ключевое слово `None` в Python означает отсутствие значения (аналог `null` в других языках)."
+      },
+      "cpp": {
+        "content": "В C++ `nullptr` используется для указателей, а для обычных переменных понятия «пусто» нет — они всегда содержат значение (или мусор)."
+      },
+      "javascript": {
+        "content": "JavaScript различает `null` (намеренное отсутствие) и `undefined` (значение не присвоено)."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Объявление переменных",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Синтаксис объявления",
+          "values": {
+            "python": "имя = значение\n(тип выводится автоматически)",
+            "cpp": "тип имя = значение;\nint x = 5;",
+            "javascript": "let/const имя = значение;\nlet x = 5;"
+          }
+        },
+        {
+          "attribute": "Изменяемость типа после объявления",
+          "values": {
+            "python": "да (динамическая типизация)",
+            "cpp": "нет (статическая типизация)",
+            "javascript": "да (динамическая типизация)"
+          }
+        },
+        {
+          "attribute": "Константы (неизменяемые переменные)",
+          "values": {
+            "python": "нет спец. ключевого слова, по соглашению ИМЯ_ВЕРХНИМ_РЕГИСТРОМ",
+            "cpp": "const тип имя = значение;",
+            "javascript": "const имя = значение;"
+          }
+        },
+        {
+          "attribute": "Область видимости (по умолчанию)",
+          "values": {
+            "python": "функциональная / глобальная",
+            "cpp": "блочная (внутри { })",
+            "javascript": "блочная (для let/const), функциональная (для var)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Числовые типы данных",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Целые числа",
+          "values": {
+            "python": "int (произвольной длины)\nx = 42",
+            "cpp": "int, long, long long (фиксированный размер)\nint x = 42;",
+            "javascript": "Number (64‑битный float)\nlet x = 42;"
+          }
+        },
+        {
+          "attribute": "Дробные числа",
+          "values": {
+            "python": "float (двойной точности)\ny = 3.14",
+            "cpp": "float, double\ndouble y = 3.14;",
+            "javascript": "Number (тот же тип, что и целые)\nlet y = 3.14;"
+          }
+        },
+        {
+          "attribute": "Особенности",
+          "values": {
+            "python": "int неограничен, есть Decimal для точных вычислений",
+            "cpp": "размер зависит от платформы, нужно выбирать тип",
+            "javascript": "все числа с плавающей точкой (IEEE 754), есть BigInt для больших целых"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Строки и логический тип",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Строки",
+          "values": {
+            "python": "str (Unicode, неизменяемые)\nname = 'Alice'",
+            "cpp": "std::string (изменяемые, #include <string>)\nstd::string name = \"Alice\";",
+            "javascript": "String (Unicode, неизменяемые)\nlet name = 'Alice';"
+          }
+        },
+        {
+          "attribute": "Логический тип",
+          "values": {
+            "python": "bool (True / False)",
+            "cpp": "bool (true / false)",
+            "javascript": "boolean (true / false)"
+          }
+        },
+        {
+          "attribute": "Пустое значение / null",
+          "values": {
+            "python": "None",
+            "cpp": "nullptr (для указателей)",
+            "javascript": "null, undefined"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Базовые коллекции",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Список / массив",
+          "values": {
+            "python": "list: [1, 2, 3] (динамический, разнотипный)",
+            "cpp": "std::vector<int>: {1,2,3} (однотипный, динамический)",
+            "javascript": "Array: [1, 2, 3] (динамический, разнотипный)"
+          }
+        },
+        {
+          "attribute": "Словарь / объект",
+          "values": {
+            "python": "dict: {'key': 'value'}",
+            "cpp": "std::map<std::string, int>",
+            "javascript": "Object: {key: 'value'} или Map"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Переменные разных типов (пример)",
+      "description": "Объявление и вывод переменных числового, строкового и логического типов.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "age = 25\npi = 3.14\nname = \"Alice\"\nis_student = True\n\nprint(f\"{name} is {age} years old, pi={pi}\")\nprint(f\"Student: {is_student}\")"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <string>\n\nint main() {\n    int age = 25;\n    double pi = 3.14;\n    std::string name = \"Alice\";\n    bool is_student = true;\n\n    std::cout << name << \" is \" << age << \" years old, pi=\" << pi << std::endl;\n    std::cout << \"Student: \" << is_student << std::endl;\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let age = 25;\nconst pi = 3.14;\nlet name = \"Alice\";\nlet isStudent = true;\n\nconsole.log(`${name} is ${age} years old, pi=${pi}`);\nconsole.log(`Student: ${isStudent}`);"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Динамическая vs статическая типизация",
+      "description": "В Python и JavaScript можно изменить тип переменной после присваивания. В C++ — нет (будет ошибка компиляции).",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "x = 10      # int\nprint(x)\nx = \"hello\" # теперь str\nprint(x)\n# это работает"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n\nint main() {\n    int x = 10;\n    std::cout << x << std::endl;\n    // x = \"hello\"; // Ошибка компиляции!\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let x = 10;     // number\nconsole.log(x);\nx = \"hello\";   // string\nconsole.log(x);\n// это работает"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "В Python целые числа не имеют ограничения по размеру — можно вычислить 2**1000 без специальных библиотек."
+      },
+      "cpp": {
+        "content": "В C++ есть тип `auto`, который выводит тип переменной из инициализатора: `auto x = 5;` — x будет `int`."
+      },
+      "javascript": {
+        "content": "Попытка сложить число и строку в JavaScript приведёт к конкатенации: `5 + '5'` даст `'55'` из-за неявного преобразования типов."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что выведет следующий код? `a = 10; a = 'ten'; print(a)`",
+        "answers": [
+          { "text": "10", "correct": false },
+          { "text": "ten", "correct": true },
+          { "text": "Ошибка", "correct": false }
+        ],
+        "explanation": "Python — динамический язык, переменная может менять тип."
+      },
+      "cpp": {
+        "question": "Что произойдёт при компиляции: `int x = 5; x = \"five\";` ?",
+        "answers": [
+          { "text": "Ошибка компиляции", "correct": true },
+          { "text": "x станет строкой", "correct": false },
+          { "text": "Программа упадёт при запуске", "correct": false }
+        ],
+        "explanation": "C++ статически типизирован, тип переменной менять нельзя."
+      },
+      "javascript": {
+        "question": "Что будет в переменной `x` после `let x = 10; x = true;` ?",
+        "answers": [
+          { "text": "10", "correct": false },
+          { "text": "true", "correct": true },
+          { "text": "Ошибка", "correct": false }
+        ],
+        "explanation": "JavaScript позволяет менять тип переменной."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какой тип у переменной `flag = False` в Python?",
+        "answers": [
+          { "text": "int", "correct": false },
+          { "text": "bool", "correct": true },
+          { "text": "str", "correct": false }
+        ],
+        "explanation": "False — это логическое значение типа bool."
+      },
+      "cpp": {
+        "question": "Что нужно подключить, чтобы использовать `std::string`?",
+        "answers": [
+          { "text": "<iostream>", "correct": false },
+          { "text": "<string>", "correct": true },
+          { "text": "<cstring>", "correct": false }
+        ],
+        "explanation": "Строки в C++ находятся в заголовочном файле <string>."
+      },
+      "javascript": {
+        "question": "Каким способом объявить неизменяемую переменную в JavaScript?",
+        "answers": [
+          { "text": "let", "correct": false },
+          { "text": "const", "correct": true },
+          { "text": "var", "correct": false }
+        ],
+        "explanation": "const запрещает переназначение переменной."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что означает `None` в Python?",
+        "answers": [
+          { "text": "Число 0", "correct": false },
+          { "text": "Отсутствие значения", "correct": true },
+          { "text": "Пустую строку", "correct": false }
+        ],
+        "explanation": "None — специальный объект, обозначающий «ничего»."
+      },
+      "cpp": {
+        "question": "Какой спецификатор используется для автоматического вывода типа в C++?",
+        "answers": [
+          { "text": "auto", "correct": true },
+          { "text": "var", "correct": false },
+          { "text": "let", "correct": false }
+        ],
+        "explanation": "auto выводит тип переменной из инициализатора: `auto x = 5;`."
+      },
+      "javascript": {
+        "question": "Чем отличается `null` от `undefined` в JavaScript?",
+        "answers": [
+          { "text": "Ничем, это одно и то же", "correct": false },
+          { "text": "null — намеренное отсутствие, undefined — значение не присвоено", "correct": true },
+          { "text": "undefined — это число", "correct": false }
+        ],
+        "explanation": "undefined означает, что переменная объявлена, но не инициализирована; null — явное указание на пустоту."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Площадь прямоугольника",
+      "description": "Объявите переменные `width = 5.5` и `height = 3.2`. Вычислите площадь (width * height) и выведите результат в формате: 'Площадь: N'.",
+      "expected_output": "Площадь: 17.6",
+      "hint": "Используйте тип double/float для дробных чисел, не забудьте преобразование к строке, если нужно."
+    },
+    {
+      "type": "task",
+      "title": "Объявление константы",
+      "description": "Создайте константу `PI = 3.14159` и выведите её значение с пояснением, например: 'Число Пи: 3.14159'.",
+      "expected_output": "Число Пи: 3.14159",
+      "hint": "В Python по соглашению имя пишут заглавными буквами; в C++ и JavaScript используйте `const`."
+    },
+    {
+      "type": "task",
+      "title": "Приведение типов",
+      "description": "Напишите код, который складывает число 10 и строку '5' и выводит результат. Сначала получите строку '105' (конкатенация), затем число 15 (преобразование).",
+      "expected_output": "105\n15",
+      "hint": "Для конкатенации используйте +, для преобразования строки в число — `Number('5')` или унарный плюс."
+    }
+  ]
+}

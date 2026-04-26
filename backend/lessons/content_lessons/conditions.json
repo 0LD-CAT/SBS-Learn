@@ -1,0 +1,339 @@
+{
+  "lessonSlug": "conditions",
+  "title": "Условные операторы",
+  "description": "Как принимать решения в коде: if, else, switch и тернарный оператор.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python `elif` — сокращение от `else if`. Отступы (indentation) определяют блок кода, а не фигурные скобки."
+      },
+      "cpp": {
+        "content": "В C++ условие в скобках должно быть выражением, которое преобразуется в `bool`. Ненулевые значения считаются `true`."
+      },
+      "javascript": {
+        "content": "В JavaScript есть как строгое (`===`), так и нестрогое (`==`) сравнение. Нестрогое может приводить к неожиданным результатам (например, `0 == false` даёт `true`)."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python нет оператора `switch` до версии 3.10, появился `match` (структурное сопоставление с образцом), но он работает иначе, чем в C++/JS."
+      },
+      "cpp": {
+        "content": "В C++ оператор `switch` работает только с целочисленными типами (int, char, enum). В конце каждого `case` обычно ставится `break`, иначе выполнение провалится дальше."
+      },
+      "javascript": {
+        "content": "В JavaScript `switch` может использовать любые типы, включая строки. Сравнение происходит строго (===)."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Синтаксис условного оператора if",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "if (без else)",
+          "values": {
+            "python": "if x > 0:\n    print('positive')",
+            "cpp": "if (x > 0) {\n    cout << \"positive\";\n}",
+            "javascript": "if (x > 0) {\n    console.log('positive');\n}"
+          }
+        },
+        {
+          "attribute": "if-else",
+          "values": {
+            "python": "if x > 0:\n    print('positive')\nelse:\n    print('negative or zero')",
+            "cpp": "if (x > 0) {\n    cout << \"positive\";\n} else {\n    cout << \"negative or zero\";\n}",
+            "javascript": "if (x > 0) {\n    console.log('positive');\n} else {\n    console.log('negative or zero');\n}"
+          }
+        },
+        {
+          "attribute": "else if (elif)",
+          "values": {
+            "python": "if x > 0:\n    print('positive')\nelif x == 0:\n    print('zero')\nelse:\n    print('negative')",
+            "cpp": "if (x > 0) {\n    cout << \"positive\";\n} else if (x == 0) {\n    cout << \"zero\";\n} else {\n    cout << \"negative\";\n}",
+            "javascript": "if (x > 0) {\n    console.log('positive');\n} else if (x === 0) {\n    console.log('zero');\n} else {\n    console.log('negative');\n}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Логические операторы",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "И (AND)",
+          "values": {
+            "python": "and",
+            "cpp": "&&",
+            "javascript": "&&"
+          }
+        },
+        {
+          "attribute": "ИЛИ (OR)",
+          "values": {
+            "python": "or",
+            "cpp": "||",
+            "javascript": "||"
+          }
+        },
+        {
+          "attribute": "НЕ (NOT)",
+          "values": {
+            "python": "not",
+            "cpp": "!",
+            "javascript": "!"
+          }
+        },
+        {
+          "attribute": "Пример",
+          "values": {
+            "python": "if x > 0 and y < 10:",
+            "cpp": "if (x > 0 && y < 10) {",
+            "javascript": "if (x > 0 && y < 10) {"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Тернарный оператор",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Синтаксис",
+          "values": {
+            "python": "value = true_expr if condition else false_expr",
+            "cpp": "value = condition ? true_expr : false_expr;",
+            "javascript": "value = condition ? true_expr : false_expr;"
+          }
+        },
+        {
+          "attribute": "Пример",
+          "values": {
+            "python": "status = 'adult' if age >= 18 else 'child'",
+            "cpp": "string status = (age >= 18) ? \"adult\" : \"child\";",
+            "javascript": "let status = age >= 18 ? 'adult' : 'child';"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Оператор switch / match",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Наличие",
+          "values": {
+            "python": "match (Python 3.10+), структурное сопоставление",
+            "cpp": "switch (целочисленные типы, enum)",
+            "javascript": "switch (любые типы, строгое сравнение)"
+          }
+        },
+        {
+          "attribute": "Синтаксис",
+          "values": {
+            "python": "match day:\n    case 1:\n        print('Monday')\n    case 2:\n        print('Tuesday')\n    case _:\n        print('Other')",
+            "cpp": "switch(day) {\n    case 1:\n        cout << \"Monday\";\n        break;\n    case 2:\n        cout << \"Tuesday\";\n        break;\n    default:\n        cout << \"Other\";\n}",
+            "javascript": "switch(day) {\n    case 1:\n        console.log('Monday');\n        break;\n    case 2:\n        console.log('Tuesday');\n        break;\n    default:\n        console.log('Other');\n}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Проверка числа на положительность, ноль или отрицательность",
+      "description": "Пример if-elif-else (или else if) для трёх случаев.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "x = int(input(\"Введите число: \"))\nif x > 0:\n    print(\"Positive\")\nelif x == 0:\n    print(\"Zero\")\nelse:\n    print(\"Negative\")"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cout << \"Enter number: \";\n    cin >> x;\n    if (x > 0) {\n        cout << \"Positive\" << endl;\n    } else if (x == 0) {\n        cout << \"Zero\" << endl;\n    } else {\n        cout << \"Negative\" << endl;\n    }\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let x = prompt(\"Enter number:\");\nx = Number(x);\nif (x > 0) {\n    console.log(\"Positive\");\n} else if (x === 0) {\n    console.log(\"Zero\");\n} else {\n    console.log(\"Negative\");\n}"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Тернарный оператор: максимальное из двух чисел",
+      "description": "Компактная запись условия.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "a, b = 10, 20\nmax_val = a if a > b else b\nprint(f\"Maximum: {max_val}\")"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 10, b = 20;\n    int max_val = (a > b) ? a : b;\n    cout << \"Maximum: \" << max_val << endl;\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let a = 10, b = 20;\nlet max_val = a > b ? a : b;\nconsole.log(`Maximum: ${max_val}`);"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Операторы switch и match",
+      "description": "Пример вывода названия дня недели по номеру (1-7).",
+      "snippets": {
+        "python": {
+          "label": "Python (match)",
+          "code": "day = 3\nmatch day:\n    case 1:\n        print(\"Monday\")\n    case 2:\n        print(\"Tuesday\")\n    case 3:\n        print(\"Wednesday\")\n    case 4:\n        print(\"Thursday\")\n    case 5:\n        print(\"Friday\")\n    case 6:\n        print(\"Saturday\")\n    case 7:\n        print(\"Sunday\")\n    case _:\n        print(\"Invalid day\")"
+        },
+        "cpp": {
+          "label": "C++ (switch)",
+          "code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int day = 3;\n    switch(day) {\n        case 1: cout << \"Monday\"; break;\n        case 2: cout << \"Tuesday\"; break;\n        case 3: cout << \"Wednesday\"; break;\n        case 4: cout << \"Thursday\"; break;\n        case 5: cout << \"Friday\"; break;\n        case 6: cout << \"Saturday\"; break;\n        case 7: cout << \"Sunday\"; break;\n        default: cout << \"Invalid day\";\n    }\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript (switch)",
+          "code": "let day = 3;\nswitch(day) {\n    case 1: console.log(\"Monday\"); break;\n    case 2: console.log(\"Tuesday\"); break;\n    case 3: console.log(\"Wednesday\"); break;\n    case 4: console.log(\"Thursday\"); break;\n    case 5: console.log(\"Friday\"); break;\n    case 6: console.log(\"Saturday\"); break;\n    case 7: console.log(\"Sunday\"); break;\n    default: console.log(\"Invalid day\");\n}"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "В Python можно использовать цепочки сравнений: `if 0 < x < 10:` — это эквивалентно `if x > 0 and x < 10`, но читается как в математике."
+      },
+      "cpp": {
+        "content": "В C++ условие `if (x = 5)` (присваивание вместо сравнения) корректно с точки зрения синтаксиса и всегда истинно (если x не 0). Современные компиляторы выдают предупреждение, а для предотвращения ошибок используют `if (5 == x)` (Yoda-условия)."
+      },
+      "javascript": {
+        "content": "В JavaScript `switch` использует строгое сравнение (===), поэтому `case '5':` не сработает для числа 5. Чтобы охватить несколько значений, можно использовать fallthrough (без break)."
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "Python поддерживает \"walrus operator\" (:=), который позволяет присвоить переменную внутри условия: `if (n := len(s)) > 10: print(f'Long string, length {n}')`."
+      },
+      "cpp": {
+        "content": "В C++17 появились инициализаторы в if: `if (int x = getValue(); x > 0) { ... }`. Переменная x доступна только внутри условия и соответствующих блоках."
+      },
+      "javascript": {
+        "content": "В JavaScript существует оператор нулевого слияния `??` и опциональная цепочка `?.`, которые помогают писать более безопасные условия при работе с потенциально `null/undefined` объектами."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Как правильно записать проверку на чётность числа в Python?",
+        "answers": [
+          { "text": "if x % 2 == 0:", "correct": true },
+          { "text": "if x % 2 = 0:", "correct": false },
+          { "text": "if x / 2 == int:", "correct": false }
+        ],
+        "explanation": "Оператор `%` возвращает остаток от деления, `==` сравнивает."
+      },
+      "cpp": {
+        "question": "Что выведет код: `if (5) { cout << \"true\"; } else { cout << \"false\"; }` ?",
+        "answers": [
+          { "text": "true", "correct": true },
+          { "text": "false", "correct": false },
+          { "text": "Ошибка компиляции", "correct": false }
+        ],
+        "explanation": "В C++ любое ненулевое значение преобразуется в true."
+      },
+      "javascript": {
+        "question": "Что выведет `console.log(5 == '5')` ?",
+        "answers": [
+          { "text": "true", "correct": true },
+          { "text": "false", "correct": false },
+          { "text": "undefined", "correct": false }
+        ],
+        "explanation": "Нестрогое равенство `==` приводит типы, поэтому 5 и '5' равны."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какой оператор используется для логического И в Python?",
+        "answers": [
+          { "text": "&&", "correct": false },
+          { "text": "and", "correct": true },
+          { "text": "&", "correct": false }
+        ],
+        "explanation": "В Python логические операторы: and, or, not."
+      },
+      "cpp": {
+        "question": "Что делает оператор `break` в `switch`?",
+        "answers": [
+          { "text": "Выходит из цикла", "correct": false },
+          { "text": "Прерывает выполнение switch и выходит из него", "correct": true },
+          { "text": "Переходит к следующему case", "correct": false }
+        ],
+        "explanation": "break предотвращает проваливание (fallthrough) в следующий case."
+      },
+      "javascript": {
+        "question": "Какое из выражений истинно в JavaScript?",
+        "answers": [
+          { "text": "0 === false", "correct": false },
+          { "text": "0 == false", "correct": true },
+          { "text": "null === undefined", "correct": false }
+        ],
+        "explanation": "0 == false → true из-за приведения типов; строгое сравнение даёт false."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что выведет `print('a' if False else 'b')` ?",
+        "answers": [
+          { "text": "a", "correct": false },
+          { "text": "b", "correct": true },
+          { "text": "Ошибка", "correct": false }
+        ],
+        "explanation": "Тернарный оператор: значение `if` берётся при условии True, иначе `else`."
+      },
+      "cpp": {
+        "question": "Какой синтаксис корректно описывает else if в C++?",
+        "answers": [
+          { "text": "else if (x > 0) { ... }", "correct": true },
+          { "text": "elif (x > 0) { ... }", "correct": false },
+          { "text": "else if x > 0 { ... }", "correct": false }
+        ],
+        "explanation": "Скобки вокруг условия обязательны, ключевое слово `else if`."
+      },
+      "javascript": {
+        "question": "Что будет в переменной `res` после `let res = 10 > 5 ? 'yes' : 'no';` ?",
+        "answers": [
+          { "text": "'yes'", "correct": true },
+          { "text": "'no'", "correct": false },
+          { "text": "10", "correct": false }
+        ],
+        "explanation": "Условие 10 > 5 истинно, поэтому берётся тогдашнее выражение."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Проверка возраста для голосования",
+      "description": "Напишите программу, которая запрашивает возраст пользователя и выводит:\n- 'Можно голосовать', если возраст >= 18,\n- 'Нельзя голосовать', если возраст < 18.\nИспользуйте if-else.",
+      "expected_output": "При вводе 20: Можно голосовать\nПри вводе 16: Нельзя голосовать",
+      "hint": "Сравните введённое значение с 18."
+    },
+    {
+      "type": "task",
+      "title": "Максимум из трёх чисел",
+      "description": "Даны три числа (задайте их в коде или введите с клавиатуры). Найдите наибольшее с помощью условных операторов (if-else, можно вложенные).",
+      "expected_output": "Для чисел 5, 12, 8: 12\nДля чисел -3, -1, -5: -1",
+      "hint": "Сравните сначала два, потом результат с третьим. Можно использовать цепочку if-else if."
+    },
+    {
+      "type": "task",
+      "title": "Оценка по шкале (switch / match)",
+      "description": "Напишите программу, которая по числовой оценке (0-5) выводит текстовый эквивалент:\n0 → 'Bad', 1 → 'Poor', 2 → 'Average', 3 → 'Good', 4 → 'Very Good', 5 → 'Excellent'.",
+      "expected_output": "При вводе 3: Good",
+      "hint": "Для Python 3.10+: match-case; для более старых версий используйте if-elif-else цепочку."
+    }
+  ]
+}

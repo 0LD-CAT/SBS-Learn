@@ -1,0 +1,292 @@
+{
+  "lessonSlug": "loops",
+  "title": "Циклы",
+  "description": "Организация повторяющихся действий: циклы for, while, do-while.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python цикл `for` используется для итерации по последовательностям (списки, строки, диапазоны) и не имеет классической C-подобной версии с индексами и условием."
+      },
+      "cpp": {
+        "content": "В C++ есть три вида циклов: `for` (классический и range‑based), `while` и `do-while` (выполняется хотя бы один раз)."
+      },
+      "javascript": {
+        "content": "JavaScript поддерживает несколько разновидностей `for`: классический, `for...in` (для свойств объектов), `for...of` (для значений итерируемых объектов)."
+      }
+    },
+    {
+      "type": "fact",
+      "python": {
+        "content": "Функция `range(n)` генерирует числа от 0 до n-1, `range(start, stop, step)` — с произвольным началом и шагом."
+      },
+      "cpp": {
+        "content": "В C++11 появился range‑based `for` для массивов и контейнеров: `for (int x : arr) { ... }`."
+      },
+      "javascript": {
+        "content": "Цикл `for...of` позволяет перебирать значения массивов, строк, Map, Set и других итерируемых объектов, игнорируя индексы."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Синтаксис основных циклов",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Цикл for (счётчик)",
+          "values": {
+            "python": "for i in range(5):\n    print(i)",
+            "cpp": "for (int i = 0; i < 5; i++) {\n    std::cout << i << std::endl;\n}",
+            "javascript": "for (let i = 0; i < 5; i++) {\n    console.log(i);\n}"
+          }
+        },
+        {
+          "attribute": "Цикл while",
+          "values": {
+            "python": "i = 0\nwhile i < 5:\n    print(i)\n    i += 1",
+            "cpp": "int i = 0;\nwhile (i < 5) {\n    std::cout << i << std::endl;\n    i++;\n}",
+            "javascript": "let i = 0;\nwhile (i < 5) {\n    console.log(i);\n    i++;\n}"
+          }
+        },
+        {
+          "attribute": "Цикл do-while",
+          "values": {
+            "python": "нет (эмулируется while с условием в конце)",
+            "cpp": "int i = 0;\ndo {\n    std::cout << i << std::endl;\n    i++;\n} while (i < 5);",
+            "javascript": "let i = 0;\ndo {\n    console.log(i);\n    i++;\n} while (i < 5);"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Итерация по коллекциям",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Перебор элементов списка/массива",
+          "values": {
+            "python": "for item in my_list:\n    print(item)",
+            "cpp": "for (int x : vec) {\n    std::cout << x << std::endl;\n}",
+            "javascript": "for (let val of arr) {\n    console.log(val);\n}"
+          }
+        },
+        {
+          "attribute": "Перебор с индексом",
+          "values": {
+            "python": "for i, val in enumerate(arr):\n    print(i, val)",
+            "cpp": "for (size_t i = 0; i < vec.size(); i++) { ... }",
+            "javascript": "for (let i = 0; i < arr.length; i++) { ... }"
+          }
+        },
+        {
+          "attribute": "Перебор свойств объекта (словаря)",
+          "values": {
+            "python": "for key in my_dict:\n    print(key, my_dict[key])",
+            "cpp": "for (auto& [key, val] : map) { ... } (C++17)",
+            "javascript": "for (let key in obj) { ... } (для собственных свойств)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Управление циклом",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Досрочный выход (break)",
+          "values": {
+            "python": "break",
+            "cpp": "break;",
+            "javascript": "break;"
+          }
+        },
+        {
+          "attribute": "Переход к следующей итерации (continue)",
+          "values": {
+            "python": "continue",
+            "cpp": "continue;",
+            "javascript": "continue;"
+          }
+        },
+        {
+          "attribute": "Блок else после цикла",
+          "values": {
+            "python": "есть (выполняется, если не было break)",
+            "cpp": "нет",
+            "javascript": "нет"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Вывод чисел от 0 до 4 (for)",
+      "description": "Классический цикл for для вывода последовательности чисел.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "for i in range(5):\n    print(i)"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n\nint main() {\n    for (int i = 0; i < 5; i++) {\n        std::cout << i << std::endl;\n    }\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "for (let i = 0; i < 5; i++) {\n    console.log(i);\n}"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Сумма чисел от 1 до 10 (while)",
+      "description": "Цикл while для накопления суммы.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "total = 0\ni = 1\nwhile i <= 10:\n    total += i\n    i += 1\nprint(total)"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n\nint main() {\n    int total = 0;\n    int i = 1;\n    while (i <= 10) {\n        total += i;\n        i++;\n    }\n    std::cout << total << std::endl;\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "let total = 0;\nlet i = 1;\nwhile (i <= 10) {\n    total += i;\n    i++;\n}\nconsole.log(total);"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "В Python есть конструкция `for...else` — блок `else` выполняется, если цикл не был прерван оператором `break`."
+      },
+      "cpp": {
+        "content": "В C++ цикл `do-while` гарантирует хотя бы одно выполнение тела, даже если условие ложно с самого начала."
+      },
+      "javascript": {
+        "content": "Цикл `for...of` появился в ES6 и позволяет удобно перебирать значения массивов, строк, Map, Set, не заботясь об индексах."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какая функция используется для генерации последовательности чисел в цикле for?",
+        "answers": [
+          { "text": "seq()", "correct": false },
+          { "text": "range()", "correct": true },
+          { "text": "enumerate()", "correct": false }
+        ],
+        "explanation": "`range()` генерирует арифметическую прогрессию для итерации."
+      },
+      "cpp": {
+        "question": "Какой цикл выполняется хотя бы один раз независимо от условия?",
+        "answers": [
+          { "text": "for", "correct": false },
+          { "text": "while", "correct": false },
+          { "text": "do-while", "correct": true }
+        ],
+        "explanation": "`do-while` сначала выполняет тело, потом проверяет условие."
+      },
+      "javascript": {
+        "question": "Какой цикл перебирает значения итерируемого объекта (например, массива)?",
+        "answers": [
+          { "text": "for...in", "correct": false },
+          { "text": "for...of", "correct": true },
+          { "text": "for each", "correct": false }
+        ],
+        "explanation": "`for...of` перебирает значения, `for...in` — ключи/индексы."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что выведет код? `for i in range(3): print(i, end=' ')`",
+        "answers": [
+          { "text": "0 1 2", "correct": true },
+          { "text": "1 2 3", "correct": false },
+          { "text": "0 1 2 3", "correct": false }
+        ],
+        "explanation": "`range(3)` даёт числа 0,1,2."
+      },
+      "cpp": {
+        "question": "Что произойдёт при выполнении: `int i = 0; while (i < 5) { std::cout << i; }` (без инкремента)?",
+        "answers": [
+          { "text": "Выведется 0 и останов", "correct": false },
+          { "text": "Бесконечный цикл (вывод нулей)", "correct": true },
+          { "text": "Ошибка компиляции", "correct": false }
+        ],
+        "explanation": "Условие всегда true, i не меняется → бесконечный цикл."
+      },
+      "javascript": {
+        "question": "Как правильно перебрать все элементы массива `let arr = [10,20,30];` и вывести их значения?",
+        "answers": [
+          { "text": "for (let i in arr) console.log(i);", "correct": false },
+          { "text": "for (let val of arr) console.log(val);", "correct": true },
+          { "text": "for each (val in arr) console.log(val);", "correct": false }
+        ],
+        "explanation": "`for...of` перебирает значения, `for...in` — индексы."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Какой оператор прерывает выполнение цикла досрочно?",
+        "answers": [
+          { "text": "continue", "correct": false },
+          { "text": "break", "correct": true },
+          { "text": "stop", "correct": false }
+        ],
+        "explanation": "`break` полностью завершает цикл."
+      },
+      "cpp": {
+        "question": "В каком заголовочном файле находится `std::vector` для использования в range‑based for?",
+        "answers": [
+          { "text": "<vector>", "correct": true },
+          { "text": "<iostream>", "correct": false },
+          { "text": "<algorithm>", "correct": false }
+        ],
+        "explanation": "Контейнер vector объявлен в `<vector>`."
+      },
+      "javascript": {
+        "question": "Что выведет `for (let i = 0; i < 3; i++) { if (i === 1) continue; console.log(i); }` ?",
+        "answers": [
+          { "text": "0 1 2", "correct": false },
+          { "text": "0 2", "correct": true },
+          { "text": "0", "correct": false }
+        ],
+        "explanation": "При i=1 срабатывает continue, пропуская вывод, но цикл продолжается."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Чётные числа",
+      "description": "Выведите все чётные числа от 0 до 20 включительно в одной строке через пробел.",
+      "expected_output": "0 2 4 6 8 10 12 14 16 18 20",
+      "hint": "Используйте цикл for с шагом 2 или условие if с проверкой остатка от деления на 2."
+    },
+    {
+      "type": "task",
+      "title": "Факториал числа",
+      "description": "Вычислите факториал числа n = 5 (5! = 120). Выведите результат.",
+      "expected_output": "120",
+      "hint": "Используйте цикл for или while, accumulating product."
+    },
+    {
+      "type": "task",
+      "title": "Таблица умножения",
+      "description": "Выведите таблицу умножения для числа 7: от 7*1 до 7*10, каждый результат с новой строки.",
+      "expected_output": "7 x 1 = 7\n7 x 2 = 14\n...\n7 x 10 = 70",
+      "hint": "Цикл for от 1 до 10, внутри вывод с форматом."
+    },
+    {
+      "type": "task",
+      "title": "Поиск первого кратного 3 и 5",
+      "description": "Найдите наименьшее положительное число, которое делится и на 3, и на 5. Используйте цикл while.",
+      "expected_output": "15",
+      "hint": "Начинайте с 1 и проверяйте условие `if (num % 3 == 0 && num % 5 == 0)`. Прекратите при нахождении."
+    }
+  ]
+}

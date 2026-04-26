@@ -1,0 +1,281 @@
+{
+  "lessonSlug": "functions",
+  "title": "Функции",
+  "description": "Создание функций, передача параметров, возврат значений, области видимости.",
+  "blocks": [
+    {
+      "type": "fact",
+      "python": {
+        "content": "В Python функция может возвращать несколько значений через кортеж: `return a, b`. При вызове их можно распаковать в переменные."
+      },
+      "cpp": {
+        "content": "В C++ функции могут быть перегружены — несколько функций с одним именем, но разными параметрами. Это называется перегрузкой функций."
+      },
+      "javascript": {
+        "content": "Функции в JavaScript — это объекты первого класса. Их можно присваивать переменным, передавать как аргументы и возвращать из других функций."
+      }
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Объявление и вызов функций",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Синтаксис объявления",
+          "values": {
+            "python": "def имя(параметры):\n    тело\n    return значение",
+            "cpp": "тип_возврата имя(параметры) {\n    тело\n    return значение;\n}",
+            "javascript": "function имя(параметры) {\n    тело\n    return значение;\n}"
+          }
+        },
+        {
+          "attribute": "Тип возвращаемого значения",
+          "values": {
+            "python": "указывать не нужно, тип определяется динамически",
+            "cpp": "указывается обязательно (или void)",
+            "javascript": "не указывается, возвращает любое значение (или undefined)"
+          }
+        },
+        {
+          "attribute": "Вызов функции",
+          "values": {
+            "python": "результат = имя(аргументы)",
+            "cpp": "результат = имя(аргументы);",
+            "javascript": "const результат = имя(аргументы);"
+          }
+        },
+        {
+          "attribute": "Функция без возврата значения",
+          "values": {
+            "python": "return None (явно или неявно)",
+            "cpp": "void имя() { ... }",
+            "javascript": "return; или не писать return (вернёт undefined)"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Параметры и аргументы",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Передача параметров по умолчанию",
+          "values": {
+            "python": "def f(x=10): — поддерживается",
+            "cpp": "void f(int x=10) — поддерживается",
+            "javascript": "function f(x=10) — поддерживается (ES6+)"
+          }
+        },
+        {
+          "attribute": "Именованные аргументы",
+          "values": {
+            "python": "да, f(b=2, a=1)",
+            "cpp": "нет (только позиционные)",
+            "javascript": "нет (можно эмулировать объектом)"
+          }
+        },
+        {
+          "attribute": "Переменное число аргументов",
+          "values": {
+            "python": "*args (кортеж), **kwargs (словарь)",
+            "cpp": "шаблоны с variadic templates или ... в C-стиле (редко)",
+            "javascript": "rest параметры: function f(...args) {}"
+          }
+        },
+        {
+          "attribute": "Передача по ссылке / значению",
+          "values": {
+            "python": "все объекты передаются по ссылке (но неизменяемые типы ведут себя как по значению)",
+            "cpp": "по значению (копия) или по ссылке (int &x, std::string &s)",
+            "javascript": "по значению для примитивов, по ссылке для объектов"
+          }
+        }
+      ]
+    },
+    {
+      "type": "comparison_matrix",
+      "title": "Область видимости переменных",
+      "languages": ["python", "cpp", "javascript"],
+      "rows": [
+        {
+          "attribute": "Локальные переменные",
+          "values": {
+            "python": "внутри функции, недоступны снаружи",
+            "cpp": "внутри блока { }, недоступны снаружи",
+            "javascript": "внутри функции, недоступны снаружи (для let/const)"
+          }
+        },
+        {
+          "attribute": "Глобальные переменные",
+          "values": {
+            "python": "объявлены вне функций, доступны на чтение внутрь, для изменения нужно global",
+            "cpp": "объявлены вне функций, доступны везде",
+            "javascript": "объявлены вне функций (var, let, const) — глобальные"
+          }
+        }
+      ]
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Простая функция (сумма двух чисел)",
+      "description": "Функция принимает два аргумента и возвращает их сумму.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "def add(a, b):\n    return a + b\n\nresult = add(10, 5)\nprint(result)  # 15"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint main() {\n    int result = add(10, 5);\n    std::cout << result << std::endl;  // 15\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "function add(a, b) {\n    return a + b;\n}\n\nlet result = add(10, 5);\nconsole.log(result);  // 15"
+        }
+      }
+    },
+    {
+      "type": "side_by_side_code",
+      "title": "Функция с параметрами по умолчанию",
+      "description": "Если второй аргумент не передан, используется значение по умолчанию.",
+      "snippets": {
+        "python": {
+          "label": "Python",
+          "code": "def greet(name, greeting='Привет'):\n    return f'{greeting}, {name}!'\n\nprint(greet('Анна'))           # Привет, Анна!\nprint(greet('Анна', 'Здравствуй')) # Здравствуй, Анна!"
+        },
+        "cpp": {
+          "label": "C++",
+          "code": "#include <iostream>\n#include <string>\n\nstd::string greet(std::string name, std::string greeting = \"Привет\") {\n    return greeting + \", \" + name + \"!\";\n}\n\nint main() {\n    std::cout << greet(\"Анна\") << std::endl;                // Привет, Анна!\n    std::cout << greet(\"Анна\", \"Здравствуй\") << std::endl;  // Здравствуй, Анна!\n    return 0;\n}"
+        },
+        "javascript": {
+          "label": "JavaScript",
+          "code": "function greet(name, greeting = 'Привет') {\n    return `${greeting}, ${name}!`;\n}\n\nconsole.log(greet('Анна'));               // Привет, Анна!\nconsole.log(greet('Анна', 'Здравствуй')); // Здравствуй, Анна!"
+        }
+      }
+    },
+    {
+      "type": "interesting_fact",
+      "python": {
+        "content": "В Python функции могут быть вложенными — одна функция внутри другой. Внутренняя функция имеет доступ к переменным внешней функции (замыкание)."
+      },
+      "cpp": {
+        "content": "C++ поддерживает лямбда-функции (безымянные функциональные объекты) начиная с C++11. Они часто используются в алгоритмах STL."
+      },
+      "javascript": {
+        "content": "Стрелочные функции `(a, b) => a + b` — краткий синтаксис, который также не имеет собственного `this`, что удобно в колбэках."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что вернёт вызов функции `def f(): pass` без `return`?",
+        "answers": [
+          { "text": "Ничего, ошибка", "correct": false },
+          { "text": "0", "correct": false },
+          { "text": "None", "correct": true }
+        ],
+        "explanation": "Если в Python нет return, функция неявно возвращает None."
+      },
+      "cpp": {
+        "question": "Какое ключевое слово нужно для функции, которая ничего не возвращает?",
+        "answers": [
+          { "text": "nil", "correct": false },
+          { "text": "void", "correct": true },
+          { "text": "null", "correct": false }
+        ],
+        "explanation": "Тип возврата `void` означает, что функция не возвращает значения."
+      },
+      "javascript": {
+        "question": "Что вернёт `function test() { return; }` ?",
+        "answers": [
+          { "text": "null", "correct": false },
+          { "text": "undefined", "correct": true },
+          { "text": "0", "correct": false }
+        ],
+        "explanation": "Пустой `return;` возвращает undefined."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Как объявить функцию с переменным числом аргументов в Python?",
+        "answers": [
+          { "text": "def f(*args):", "correct": true },
+          { "text": "def f(...):", "correct": false },
+          { "text": "def f(args...):", "correct": false }
+        ],
+        "explanation": "*args собирает все позиционные аргументы в кортеж."
+      },
+      "cpp": {
+        "question": "Что такое перегрузка функций?",
+        "answers": [
+          { "text": "Несколько функций с одним именем, но разными параметрами", "correct": true },
+          { "text": "Функция, вызывающая саму себя", "correct": false },
+          { "text": "Функция, объявленная внутри другой функции", "correct": false }
+        ],
+        "explanation": "Перегрузка — это возможность иметь несколько функций с одинаковым именем, различающихся типами или количеством параметров."
+      },
+      "javascript": {
+        "question": "Что такое стрелочная функция?",
+        "answers": [
+          { "text": "Функция, объявленная через ключевое слово `function`", "correct": false },
+          { "text": "Краткий синтаксис `() => {}`, нет своего `this`", "correct": true },
+          { "text": "Функция, которая не может принимать параметры", "correct": false }
+        ],
+        "explanation": "Стрелочные функции имеют сокращённый синтаксис и не переопределяют контекст this."
+      }
+    },
+    {
+      "type": "quiz_question",
+      "python": {
+        "question": "Что выведет код: `def add(a,b): return a+b; print(add(2,3))` ?",
+        "answers": [
+          { "text": "5", "correct": true },
+          { "text": "23", "correct": false },
+          { "text": "Ошибка", "correct": false }
+        ],
+        "explanation": "Функция возвращает сумму чисел."
+      },
+      "cpp": {
+        "question": "Чем отличается передача параметра по значению от передачи по ссылке в C++?",
+        "answers": [
+          { "text": "По значению создаётся копия, по ссылке — псевдоним переменной", "correct": true },
+          { "text": "Ничем", "correct": false },
+          { "text": "По ссылке копия не создаётся, но изменить исходную нельзя", "correct": false }
+        ],
+        "explanation": "При передаче по значению функция работает с копией, при передаче по ссылке — с исходной переменной."
+      },
+      "javascript": {
+        "question": "Как объявить функцию, которая может быть вызвана до её определения в коде?",
+        "answers": [
+          { "text": "Function Declaration (function f() {})", "correct": true },
+          { "text": "Function Expression (const f = function() {})", "correct": false },
+          { "text": "Стрелочную функцию", "correct": false }
+        ],
+        "explanation": "Function Declaration всплывает (hoisting) и может быть вызвана до объявления."
+      }
+    },
+    {
+      "type": "task",
+      "title": "Функция «приветствие»",
+      "description": "Напишите функцию `greet(name)`, которая принимает имя и возвращает строку 'Привет, {name}!'. Вызовите её с вашим именем и выведите результат.",
+      "expected_output": "Привет, Анна!",
+      "hint": "Используйте конкатенацию строк или шаблоны, не забудьте return."
+    },
+    {
+      "type": "task",
+      "title": "Функция «максимум из двух»",
+      "description": "Создайте функцию `max2(a, b)`, которая возвращает большее из двух чисел. Проверьте её на парах (10, 20) и (30, 15).",
+      "expected_output": "20\n30",
+      "hint": "Используйте условный оператор (if или тернарный)."
+    },
+    {
+      "type": "task",
+      "title": "Функция с параметром по умолчанию",
+      "description": "Напишите функцию `pow(base, exponent=2)`, которая возводит `base` в степень `exponent`. По умолчанию степень равна 2 (квадрат). Вызовите её с одним аргументом (4) и с двумя (2, 3).",
+      "expected_output": "16\n8",
+      "hint": "Используйте цикл или оператор умножения."
+    }
+  ]
+}
