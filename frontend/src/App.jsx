@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import OAuthSuccess from "./pages/OAuthSuccess"
 import Onboarding from "./pages/Onboarding"
 import Lessons from "./pages/Lessons";
+import LessonPage from "./pages/LessonPage";
 import Practice from "./pages/Practice";
 
 
@@ -31,6 +32,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Lessons />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/lessons/:lessonId"
+          element={
+            <ProtectedRoute>
+              <LessonPage />
             </ProtectedRoute>
           }
         />

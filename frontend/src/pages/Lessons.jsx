@@ -161,6 +161,7 @@ export default function Lessons() {
           <LessonCard
             key={lesson.id}
             lesson={lesson}
+            profile={profile}
           />
         ))}
       </div>
@@ -170,7 +171,7 @@ export default function Lessons() {
 }
 
 
-function LessonCard({ lesson }) {
+function LessonCard({ lesson, profile }) {
   const navigate = useNavigate();
 
   const getStyles = () => {
@@ -187,7 +188,12 @@ function LessonCard({ lesson }) {
 
   const handleClick = () => {
     if (lesson.status !== "locked") {
-      navigate(`/lessons/${lesson.slug}`);
+      navigate(`/lessons/${lesson.id}`, {
+        state: {
+          leftLang: profile?.language_pair?.lang1?.slug,
+          rightLang: profile?.language_pair?.lang2?.slug
+        }
+      });
     }
   };
 
