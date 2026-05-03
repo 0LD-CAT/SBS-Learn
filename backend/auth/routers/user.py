@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...database import get_db
 from ...lessons.packages.languages import Languages
+from ...lessons.packages.lessons import Lessons
 from ...lessons.schemas.languages import LanguagesPair
 from ..packages.helpers import decode_token
 from ...lessons.packages.progress import UserProgress
@@ -22,8 +23,9 @@ async def protected_route(
     :param db_session: Экземпляр сессии БД.
     :return: словарь с данными пользователя.
     """
-    print("!!!", token)
+    print(token)
     payload = await decode_token(token)
+
     if payload is None:
         raise HTTPException(
             status_code=401, detail="Неверный токен или срок действия истёк"
@@ -54,7 +56,7 @@ async def select_languages_pair(
     :param db_session: Экземпляр сессии БД.
     :return:
     """
-    print("!!!", token)
+
     payload = await decode_token(token)
 
     if not payload:
@@ -88,3 +90,55 @@ async def get_user_lessons(token: str = Depends(oauth2_scheme), db_session: Asyn
     lessons = await UserProgress(db_session).get_user_lessons_progress(user_id=user_id)
 
     return {"lessons": lessons}
+
+@router.post("/lessons/{lesson_id}/complete")
+async def complete_lesson(
+    lesson_id: int,
+    db_session: AsyncSession = Depends(get_db),
+    token: str = Depends(oauth2_scheme),
+):
+    """Обновление прогресса уроков для пользователя.
+
+    :param lesson_id: id урока
+    :param token: jwt токен.
+    :param db_session: Экземпляр сессии БД.
+    :return: Список тем.
+    """
+
+    payload = await decode_token(token)
+
+    if not payload:
+        raise HTTPException(401, "Неверный токен!")
+
+    user_id = int(payload["sub"])
+
+    result = await UserProgress(db_session).update_user_lessons_progress(
+        user_id=user_id,
+        lesson_id=lesson_id
+    )
+
+    return {"result": result}
+
+
+@router.get("/lessons/progress", tags=["Lessons"])
+async def get_progress(
+    token: str = Depends(oauth2_scheme),
+    db_session: AsyncSession = Depends(get_db)
+):
+    """Получение % прогресса изучения пар ЯП для пользователя.
+
+    :param token: jwt токен.
+    :param db_session: Экземпляр сессии БД.
+    :return: % выполнения для пользователя.
+    """
+
+    payload = await decode_token(token)
+
+    if not payload:
+        raise HTTPException(401, "Неверный токен!")
+
+    user_id = int(payload["sub"])
+
+    progress = await Lessons(db_session).get_progress_by_language_pairs(user_id)
+
+    return {"user_id": user_id, "progress": progress}

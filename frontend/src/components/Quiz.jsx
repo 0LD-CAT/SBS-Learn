@@ -1,17 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Quiz = ({ block, langs }) => {
+const Quiz = ({ block, langs, index, onAnswer, showResults }) => {
   const leftData = block[langs.left.slug];
   const rightData = block[langs.right.slug];
 
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [selectedRight, setSelectedRight] = useState(null);
 
+  useEffect(() => {
+    onAnswer(index, {
+      left: selectedLeft,
+      right: selectedRight,
+      leftCorrect: leftData?.answers[selectedLeft]?.correct,
+      rightCorrect: rightData?.answers[selectedRight]?.correct,
+    });
+  }, [selectedLeft, selectedRight]);
+
   if (!leftData || !rightData) return null;
+
+  const getClass = (selected, i, correct) => {
+    if (!showResults) {
+      return selected === i
+        ? "bg-blue-100 border-blue-400"
+        : "hover:bg-gray-100";
+    }
+
+    if (selected === null) return "";
+
+    if (selected === i) {
+      return correct
+        ? "bg-green-100 border-green-400"
+        : "bg-red-100 border-red-400";
+    }
+
+    return "";
+  };
 
   return (
     <div className="space-y-6">
-      {/* LEFT LANGUAGE */}
+      {/* LEFT */}
       <div className="bg-gray-50 rounded-xl p-4">
         <h4 className="font-semibold mb-2 text-primary">
           {langs.left.name}
@@ -26,27 +53,21 @@ const Quiz = ({ block, langs }) => {
             <button
               key={i}
               onClick={() => setSelectedLeft(i)}
-              className={`w-full text-left p-3 rounded-lg border transition ${
-                selectedLeft === i
-                  ? a.correct
-                    ? "bg-green-100 border-green-400"
-                    : "bg-red-100 border-red-400"
-                  : "hover:bg-gray-100"
-              }`}
+              className={`w-full text-left p-3 rounded-lg border transition ${getClass(selectedLeft, i, a.correct)}`}
             >
               {a.text}
             </button>
           ))}
         </div>
 
-        {selectedLeft !== null && (
+        {showResults && selectedLeft !== null && (
           <p className="mt-3 text-sm text-gray-600">
             {leftData.explanation}
           </p>
         )}
       </div>
 
-      {/* RIGHT LANGUAGE */}
+      {/* RIGHT */}
       <div className="bg-gray-50 rounded-xl p-4">
         <h4 className="font-semibold mb-2 text-red-500">
           {langs.right.name}
@@ -61,20 +82,14 @@ const Quiz = ({ block, langs }) => {
             <button
               key={i}
               onClick={() => setSelectedRight(i)}
-              className={`w-full text-left p-3 rounded-lg border transition ${
-                selectedRight === i
-                  ? a.correct
-                    ? "bg-green-100 border-green-400"
-                    : "bg-red-100 border-red-400"
-                  : "hover:bg-gray-100"
-              }`}
+              className={`w-full text-left p-3 rounded-lg border transition ${getClass(selectedRight, i, a.correct)}`}
             >
               {a.text}
             </button>
           ))}
         </div>
 
-        {selectedRight !== null && (
+        {showResults && selectedRight !== null && (
           <p className="mt-3 text-sm text-gray-600">
             {rightData.explanation}
           </p>

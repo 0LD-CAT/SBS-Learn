@@ -124,7 +124,7 @@
     {
       "type": "side_by_side_code",
       "title": "Hello World",
-      "description": "Первая программа для сравнения синтаксиса трёх языков.",
+      "description": "Первая программа для сравнения синтаксиса языков.",
       "snippets": {
         "python": {
           "label": "Python",
@@ -248,7 +248,7 @@
         "explanation": "Python выполняется сверху вниз."
       },
       "cpp": {
-        "question": "Какая функция является точкой входа?",
+        "question": "Какая функция является точкой входа в C++?",
         "answers": [
           { "text": "main()", "correct": true },
           { "text": "start()", "correct": false }

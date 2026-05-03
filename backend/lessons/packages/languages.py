@@ -64,6 +64,7 @@ class Languages:
         pair, lang1_obj, lang2_obj = row
 
         return {
+            "id": pair.id,
             "slug": pair.slug,
             "lang1": {
                 "id": lang1_obj.id,

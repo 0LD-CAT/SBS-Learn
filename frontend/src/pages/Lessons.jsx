@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import api from "../api/axios";
 import {
@@ -15,6 +15,14 @@ export default function Lessons() {
   const navigate = useNavigate();
   const [lessons, setLessons] = useState([]);
   const [profile, setProfile] = useState(null);
+  const location = useLocation();
+  const message = location.state?.error;
+
+  useEffect(() => {
+      if (location.state?.error) {
+        window.history.replaceState({}, document.title);
+      }
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -153,6 +161,12 @@ export default function Lessons() {
           </div>
 
         </div>
+
+        {message && (
+            <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-700 text-center">
+                {message}
+            </div>
+        )}
 
 
       {/* LESSON GRID */}

@@ -1,9 +1,9 @@
 from typing import Optional
 
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..models import Lesson, LessonContent
+from ..models import Lesson, LessonContent, UserLessonProgress, LanguagePair
 
 
 class Lessons:
@@ -143,3 +143,42 @@ class Lessons:
 
 
         return filtered_blocks
+
+    async def get_progress_by_language_pairs(self, user_id: int):
+        """Получение % прогресса изучения пар ЯП для пользователя.
+
+        :param user_id: id пользователя.
+        :return: % выполнения.
+        """
+
+        total_lessons_query = select(func.count(Lesson.id))
+        total_lessons = (await self.db_session.execute(total_lessons_query)).scalar()
+
+
+        pairs_query = select(LanguagePair.id, LanguagePair.slug)
+        pairs = (await self.db_session.execute(pairs_query)).all()
+
+        result = []
+
+        for pair_id, slug in pairs:
+
+            completed_query = select(func.count(UserLessonProgress.id)).where(
+                UserLessonProgress.user_id == user_id,
+                UserLessonProgress.language_pair_id == pair_id,
+                UserLessonProgress.status == "completed"
+            )
+
+            completed = (await self.db_session.execute(completed_query)).scalar()
+
+            if completed == 0:
+                progress = 0
+            else:
+                progress = int((completed / total_lessons) * 100)
+
+            result.append({
+                "language_pair_id": pair_id,
+                "slug": slug,
+                "progress": progress
+            })
+
+        return result

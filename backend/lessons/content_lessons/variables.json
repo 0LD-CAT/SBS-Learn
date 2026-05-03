@@ -153,7 +153,7 @@
     },
     {
       "type": "side_by_side_code",
-      "title": "Переменные разных типов (пример)",
+      "title": "Переменные разных типов",
       "description": "Объявление и вывод переменных числового, строкового и логического типов.",
       "snippets": {
         "python": {
@@ -204,7 +204,7 @@
     {
       "type": "quiz_question",
       "python": {
-        "question": "Что выведет следующий код? `a = 10; a = 'ten'; print(a)`",
+        "question": "Что выведет следующий код? `a = 10; a = 'ten'; print(a)` на Python",
         "answers": [
           { "text": "10", "correct": false },
           { "text": "ten", "correct": true },
@@ -213,7 +213,7 @@
         "explanation": "Python — динамический язык, переменная может менять тип."
       },
       "cpp": {
-        "question": "Что произойдёт при компиляции: `int x = 5; x = \"five\";` ?",
+        "question": "Что произойдёт при компиляции на C++: `int x = 5; x = \"five\";` ?",
         "answers": [
           { "text": "Ошибка компиляции", "correct": true },
           { "text": "x станет строкой", "correct": false },
@@ -222,7 +222,7 @@
         "explanation": "C++ статически типизирован, тип переменной менять нельзя."
       },
       "javascript": {
-        "question": "Что будет в переменной `x` после `let x = 10; x = true;` ?",
+        "question": "Что будет в переменной `x` после `let x = 10; x = true;` на JavaScript?",
         "answers": [
           { "text": "10", "correct": false },
           { "text": "true", "correct": true },
@@ -243,7 +243,7 @@
         "explanation": "False — это логическое значение типа bool."
       },
       "cpp": {
-        "question": "Что нужно подключить, чтобы использовать `std::string`?",
+        "question": "Что нужно подключить, чтобы использовать `std::string` в C++?",
         "answers": [
           { "text": "<iostream>", "correct": false },
           { "text": "<string>", "correct": true },
