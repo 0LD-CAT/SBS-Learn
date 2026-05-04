@@ -10,6 +10,18 @@ ___
 ### Prod/dev
 `npm install --prefix ./frontend`
 
+___
+## Запуск (одной командой)
+`docker compose up --build` - docker container (backend, frontend, piston)
+
+## Запуск (по отдельности)
+`uvicorn main:app --reload` - backend
+
+`cd ./frontend && npm run dev` - frontend
+
+`docker start piston_api` - piston api
+
+___
 ## Инициализация docker контейнера piston api
 docker run `
   --privileged `
@@ -21,18 +33,9 @@ docker run `
 
 через endpoint `/piston/language/install` - установка языков для piston
 ___
-## Запуск
-`uvicorn main:app --reload` - backend
-
-`cd ./frontend && npm run dev` - frontend
-
-`docker start piston_api` - piston api
-
-___
 ## Миграции
 `alembic revision --autogenerate` - новая версия
 
 `alembic upgrade head` - обновление БД до последней версии
 
 `alembic downgrade -1` - Понижение версии БД на 1
-
