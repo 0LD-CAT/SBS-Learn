@@ -53,7 +53,6 @@ async def execute(request: dict):
         )
 
     result = response.json()["run"]
-    print(result)
 
     return {
         "stdout": result["stdout"],
