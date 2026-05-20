@@ -35,7 +35,7 @@ export default function Profile() {
 
     const fetchProgress = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/lessons/progress", {
+        const res = await fetch("/api/lessons/progress", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

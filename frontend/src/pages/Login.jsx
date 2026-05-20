@@ -51,10 +51,10 @@ export default function Login() {
   };
 
   const googleLogin = () => {
-    window.location.href = "http://localhost:8000/auth/google/login";};
+    window.location.href = "/api/auth/google/login";};
 
   const githubLogin = () => {
-    window.location.href = "http://localhost:8000/auth/github/login";};
+    window.location.href = "/api/auth/github/login";};
 
   return (
     <div className="min-h-screen bg-bgPage flex justify-center items-center px-4">

@@ -32,7 +32,7 @@ export default function Lessons() {
   const fetchData = async () => {
     try {
       const profileRes =
-        await api.get("/protected");
+        await api.get("/protected/");
 
       const lessonsRes =
         await api.get("/lessons/user");

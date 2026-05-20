@@ -14,6 +14,9 @@ class Lessons:
 
     Методы:
         * get_lessons() - получить все темы
+        * get_lesson_content() - получить контент для темы урока
+        * filter_blocks_by_languages() - получить контент для пары ЯП
+        * get_progress_by_language_pairs() - получение % прогресса изучения
     """
 
     def __init__(self, db_session: Optional[AsyncSession] = None):
@@ -66,6 +69,13 @@ class Lessons:
 
 
     async def filter_blocks_by_languages(self, blocks, left_lang, right_lang):
+        """Фильтрация блоков контента для пары ЯП.
+
+        :param blocks: блок контента
+        :param left_lang: 1 ЯП
+        :param right_lang: 2 ЯП
+        :return: нужный контент для пары ЯП
+        """
 
         langs = {left_lang, right_lang}
 
@@ -75,7 +85,6 @@ class Lessons:
 
             block_copy = block.copy()
 
-            # comparison_matrix
             if block["type"] == "comparison_matrix":
 
                 new_block = block_copy
@@ -105,8 +114,6 @@ class Lessons:
 
                 continue
 
-
-            # code_showcase / side_by_side_code
             if block["type"] in ["code_showcase", "side_by_side_code"]:
 
                 new_block = block_copy
@@ -122,8 +129,6 @@ class Lessons:
 
                 continue
 
-
-            # языковые quiz_question / fact / interesting_fact
             language_keys = {"python", "cpp", "javascript"}
 
             if language_keys.intersection(block.keys()):
@@ -137,10 +142,7 @@ class Lessons:
 
                 continue
 
-
-            # универсальные блоки (fact / quiz_question / task)
             filtered_blocks.append(block_copy)
-
 
         return filtered_blocks
 

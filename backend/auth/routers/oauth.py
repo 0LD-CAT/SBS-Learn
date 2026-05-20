@@ -7,8 +7,10 @@ from ...database import get_db
 from ..oauth import oauth
 from ..packages.auth import UserAuth
 from ..packages.helpers import create_access_token
+from backend.settings import settings
 
 router = APIRouter(tags=["Authentication"])
+frontend_uri=settings.FRONTEND_URI
 
 
 @router.get("/google/login")
@@ -19,7 +21,8 @@ async def google_login(request: Request):
     :return: redirect на google_callback
     """
 
-    redirect_uri = request.url_for("google_callback")
+    #redirect_uri = request.url_for("google_callback")
+    redirect_uri = f"{frontend_uri}/api/auth/google/callback"
 
     return await oauth.google.authorize_redirect(
         request, redirect_uri, prompt="select_account"
@@ -39,7 +42,7 @@ async def google_callback(request: Request, db_session: AsyncSession = Depends(g
         token = await oauth.google.authorize_access_token(request)
     except OAuthError as e:
         print(e)
-        return RedirectResponse("http://localhost:5173/login")
+        return RedirectResponse(f"{frontend_uri}/login")
 
     user_info = token["userinfo"]
 
@@ -53,7 +56,7 @@ async def google_callback(request: Request, db_session: AsyncSession = Depends(g
     token_data = {"sub": str(user.id), "username": user.username, "email": user.email}
     jwt_token = await create_access_token(data=token_data)
 
-    return RedirectResponse(f"http://localhost:5173/oauth-success?token={jwt_token}")
+    return RedirectResponse(f"{frontend_uri}/oauth-success?token={jwt_token}")
 
 
 @router.get("/github/login")
@@ -64,7 +67,8 @@ async def github_login(request: Request):
     :return: redirect на github_callback
     """
 
-    redirect_uri = request.url_for("github_callback")
+    #redirect_uri = request.url_for("github_callback")
+    redirect_uri = f"{frontend_uri}/api/auth/github/callback"
 
     return await oauth.github.authorize_redirect(request, redirect_uri, login="")
 
@@ -82,7 +86,7 @@ async def github_callback(request: Request, db_session: AsyncSession = Depends(g
         token = await oauth.github.authorize_access_token(request)
     except OAuthError as e:
         print(e)
-        return RedirectResponse("http://localhost:5173/login")
+        return RedirectResponse(f"{frontend_uri}/login")
 
     resp = await oauth.github.get("user", token=token)
 
@@ -102,4 +106,4 @@ async def github_callback(request: Request, db_session: AsyncSession = Depends(g
     token_data = {"sub": str(user.id), "username": user.username, "email": user.email}
     jwt_token = await create_access_token(data=token_data)
 
-    return RedirectResponse(f"http://localhost:5173/oauth-success?token={jwt_token}")
+    return RedirectResponse(f"{frontend_uri}/oauth-success?token={jwt_token}")

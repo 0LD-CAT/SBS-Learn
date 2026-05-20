@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
-import axios from "axios";
+import api from "../api/axios";
 
 import { FiPlay } from "react-icons/fi";
 import { MdRestartAlt } from "react-icons/md";
@@ -48,8 +48,8 @@ export default function CodePanel({ side, defaultLanguage }) {
     setRunning(true);
     setRunStatus(null);
 
-    const response = await axios.post(
-      "http://127.0.0.1:8000/piston/code/execute",
+    const response = await api.post(
+      "/piston/code/execute",
       {
         language,
         code,
@@ -93,8 +93,8 @@ export default function CodePanel({ side, defaultLanguage }) {
 
   useEffect(() => {
 
-    axios
-      .get("http://127.0.0.1:8000/languages")
+    api
+      .get("/languages")
       .then(res => setLanguages(res.data.languages));
 
   }, []);
@@ -130,10 +130,11 @@ export default function CodePanel({ side, defaultLanguage }) {
 
   return (
 
-    <div className="w-full lg:w-1/2
-                      h-[calc(95vh-140px)]
-                      flex flex-col
-                      gap-2">
+    <div className="
+      w-full lg:w-1/2
+      flex flex-col
+      gap-2
+    ">
 
       <div className="flex justify-between items-center
         bg-gray-50
@@ -209,21 +210,28 @@ export default function CodePanel({ side, defaultLanguage }) {
 
       {/* EDITOR */}
 
-      <div className="
-          flex-1
-          border
-          rounded-xl
-          overflow-hidden
-        ">
+      <div
+          className="
+            h-[320px]
+            lg:h-[500px]
+            border
+            rounded-xl
+            overflow-hidden
+          "
+        >
           <Editor
             height="100%"
-            language={
-              getLanguageConfig(language)?.slug
-            }
+            language={getLanguageConfig(language)?.slug}
             value={code}
             onChange={(value) => setCode(value)}
+            options={{
+              automaticLayout: true,
+              minimap: { enabled: false },
+              scrollBeyondLastLine: false,
+              wordWrap: "on",
+            }}
           />
-        </div>
+      </div>
 
 
       {/* INPUT */}
@@ -236,6 +244,7 @@ export default function CodePanel({ side, defaultLanguage }) {
           placeholder="Введите данные здесь..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          style={{ touchAction: "manipulation" }}
           className="
             bg-white
             border

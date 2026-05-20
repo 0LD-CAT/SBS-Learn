@@ -37,7 +37,7 @@ ___
 
 ___
 ## Запуск (одной командой)
-`docker compose up --build` - docker container (backend, frontend, piston)
+`docker compose up` - docker container (backend, frontend, piston)
 
 ## Запуск (по отдельности)
 `uvicorn main:app --reload` - backend
@@ -58,12 +58,18 @@ docker run `
   ghcr.io/engineer-man/piston
 ```
 
+```
+docker compose `
+  --env-file .env.prod `
+  -f docker-compose.prod.yml `
+  up --build
+```
 через endpoint `/piston/language/install` - установка языков для piston
 ___
 ## Миграции
-`alembic revision --autogenerate` - новая версия
+`cd ./backend && alembic revision --autogenerate` - новая версия
 
-`alembic upgrade head` - обновление БД до последней версии
+`cd ./backend && alembic upgrade head` - обновление БД до последней версии
 
 `alembic downgrade -1` - Понижение версии БД на 1
 ___

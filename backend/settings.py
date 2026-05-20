@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     OAUTH_GITHUB_CLIENT_SECRET: str
 
     PISTON_API_URI: str
+    FRONTEND_URI: str
 
     @property
     def DATABASE_URL_asyncpg(self):
@@ -41,7 +42,7 @@ class Settings(BaseSettings):
         )
 
     model_config = SettingsConfigDict(
-        env_file=BASE_DIR / ".env", env_file_encoding="utf-8"
+        env_file=BASE_DIR / ".env.prod", env_file_encoding="utf-8"
     )
 
 
