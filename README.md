@@ -25,6 +25,14 @@ SBSLearn
 └── README.md                # Описание и команды для управления проектом
 ```
 ___
+Запуск
+```
+docker compose `
+  --env-file .env.prod `
+  -f docker-compose.prod.yml `
+  up --build
+```
+___
 ## Установка зависимостей (backend)
 ### Prod/dev
 `pip install -r backend/config/requirements.txt`
@@ -58,12 +66,6 @@ docker run `
   ghcr.io/engineer-man/piston
 ```
 
-```
-docker compose `
-  --env-file .env.prod `
-  -f docker-compose.prod.yml `
-  up --build
-```
 через endpoint `/piston/language/install` - установка языков для piston
 ___
 ## Миграции
